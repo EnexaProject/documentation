@@ -76,6 +76,10 @@ entries:
             - title: Shared Directory
               url: /shared_directory.html
               output: web, pdf
+              
+            - title: Metadata
+              url: /metadata.html
+              output: web, pdf
 
             - title: Volumes
               url: /parameters_volumes.html
@@ -88,21 +92,13 @@ entries:
         - title: Platform Components
           output: web, pdf
 
-        - title: Core Library
-          output: web, pdf
-          subfolderitems:
-
-            - title: Service description
-              url: /service_des.html
-              output: web, pdf
+    - title: Service description
+      url: /service_des.html
+      output: web, pdf
 
 
     - title: General Platform API
       url: /platform_api.html
-      output: web, pdf
-
-    - title: Integrating a System
-      url: /system_integration_api.html
       output: web, pdf
 
     - title: FAQ
