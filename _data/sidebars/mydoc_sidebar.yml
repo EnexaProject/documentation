@@ -73,8 +73,8 @@ entries:
               url: /parameters_env.html
               output: web, pdf
 
-            - title: Platform Config File
-              url: /parameters_config.html
+            - title: Shared Directory
+              url: /shared_directory.html
               output: web, pdf
 
             - title: Volumes
