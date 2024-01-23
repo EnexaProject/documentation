@@ -92,8 +92,8 @@ entries:
           output: web, pdf
           subfolderitems:
 
-            - title: Java Components
-              url: /java_components.html
+            - title: Service description
+              url: /mydoc_about.html
               output: web, pdf
 
 
