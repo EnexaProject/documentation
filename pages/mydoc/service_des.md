@@ -1,3 +1,12 @@
+---
+title: Service Description
+keywords: ENEXA Documentation
+sidebar: main_sidebar
+toc: false
+permalink: service_des.html
+folder: mydoc
+---
+
 # Service Start
 
 - The service needs to be started with a shared volume. The service has to be aware of the directory so that it can add it to
