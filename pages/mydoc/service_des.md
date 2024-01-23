@@ -22,22 +22,16 @@ folder: mydoc
 - RDF serialization:
   - By default, JSON-LD is used
   - The service may take the Accept header in the request into account to return results (e.g., RDF data) using other serializations
+
+  
 | Name | Start Experiment |
 |----------|----------|
 | URL | /start-experiment |
 | Description | The service sets up the environment for a new experiment |
 | Type |-	HTTP POST -	synchronous  |
 | Parameters |  |
-| Steps |1.	Generate experiment IRI and create its meta data
-2.	Create shared directory
-3.	Start default containers
-4.	Update experiment meta data with data from steps 2 and 3  |
+| Steps |1.	Generate experiment IRI and create its meta data <br> 2.	Create shared directory <br> 3.	Start default containers <br> 4.	Update experiment meta data with data from steps 2 and 3  |
 | Response type| JSON-LD |
-| Response content |-	Experiment IRI
--	Meta data SPARQL endpoint URL
--	Shared directory path
-  |
-| Errors | ·	HTTP 500:
-o	The service was not able to perform one of the necessary steps
- |
+| Response content |-	Experiment IRI -	Meta data SPARQL endpoint URL -	Shared directory path  |
+| Errors | ·	HTTP 500:o	The service was not able to perform one of the necessary steps |
 
