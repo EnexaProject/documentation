@@ -18,7 +18,12 @@ entries:
       url: /tocpage.html
       output: pdf
       type: frontmatter
-
+      
+  - title: Introduction
+    url: /index.html
+    output: toplevel, pdf
+    type: homepage
+    
   - title: Overview
     output: web, pdf
     folderitems:
