@@ -93,7 +93,7 @@ entries:
           subfolderitems:
 
             - title: Service description
-              url: /mydoc_about.html
+              url: /service_des.html
               output: web, pdf
 
 
