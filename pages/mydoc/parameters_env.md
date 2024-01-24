@@ -1,7 +1,7 @@
 ---
 title: Environmental Variables
 keywords: ENEXA Documentation
-sidebar: main_sidebar
+sidebar: mydoc_sidebar
 toc: false
 permalink: parameters_env.html
 folder: mydoc

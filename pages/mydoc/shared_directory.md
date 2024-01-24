@@ -1,7 +1,7 @@
 ---
 title: Shared Directory
 keywords: ENEXA Documentation
-sidebar: main_sidebar
+sidebar: mydoc_sidebar
 toc: false
 permalink: shared_directory.html
 folder: mydoc

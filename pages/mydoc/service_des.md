@@ -1,7 +1,7 @@
 ---
 title: Service Description
 keywords: ENEXA Documentation
-sidebar: main_sidebar
+sidebar: mydoc_sidebar
 toc: false
 permalink: service_des.html
 folder: mydoc
