@@ -36,9 +36,9 @@ entries:
       url: /quick_guide.html
       output: web, pdf
 
-    - title: Deployment with Docker
-      url: /docker.html
-      output: web, pdf
+#    - title: Deployment with Docker
+#      url: /docker.html
+#      output: web, pdf
 
     - title: How to develop your module
       url : /how_module.html
