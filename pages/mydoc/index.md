@@ -4,6 +4,7 @@ keywords: ENEXA Documentation
 sidebar: mydoc_sidebar
 toc: false
 folder: mydoc
+permalink: index.html
 ---
 
 Welcome to the ENEXA project documentation pages.
