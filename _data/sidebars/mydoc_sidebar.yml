@@ -57,17 +57,17 @@ entries:
           output: web, pdf
           subfolderitems:
 
-            - title: Requirements
-              url: /requirements.html
-              output: web, pdf
+#            - title: Requirements
+#              url: /requirements.html
+#              output: web, pdf
 
-            - title: On a Single Machine
-              url: /platform_deployment_single_machine.html
-              output: web, pdf
+#            - title: On a Single Machine
+#              url: /platform_deployment_single_machine.html
+#              output: web, pdf
 
-            - title: Troubleshooting
-              url: /troubleshooting.html
-              output: web, pdf
+#            - title: Troubleshooting
+#              url: /troubleshooting.html
+#              output: web, pdf
             
             - title: Env. Variables
               url: /parameters_env.html
@@ -89,21 +89,21 @@ entries:
               url: /demo.html
               output: web, pdf
 
-        - title: Platform Components
-          output: web, pdf
+#        - title: Platform Components
+#          output: web, pdf
 
     - title: Service description
       url: /service_des.html
       output: web, pdf
 
 
-    - title: General Platform API
-      url: /platform_api.html
-      output: web, pdf
-
-    - title: FAQ
-      url: /faq.html
-      output: web, pdf
+#    - title: General Platform API
+#      url: /platform_api.html
+#      output: web, pdf
+#
+#    - title: FAQ
+#      url: /faq.html
+#      output: web, pdf
 
   - title: Modules
     output: web, pdf
