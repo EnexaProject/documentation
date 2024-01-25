@@ -81,9 +81,9 @@ entries:
               url: /metadata.html
               output: web, pdf
 
-            - title: Volumes
-              url: /parameters_volumes.html
-              output: web, pdf
+#            - title: Volumes
+#              url: /parameters_volumes.html
+#              output: web, pdf
           
             - title: demo
               url: /demo.html

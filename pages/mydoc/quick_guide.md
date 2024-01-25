@@ -9,6 +9,8 @@ folder: mydoc
 # How run the service 
 - In metadata directory put all needed metadata files
 - Dedicate a directory as a shared directory  
+
+
 ## Option one use docker  
 following you can see an example of docker for running the service
 ```
