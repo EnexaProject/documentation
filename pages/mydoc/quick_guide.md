@@ -1,5 +1,5 @@
 ---
-title: Quick guide
+title: Quick Deployment Guide
 keywords: ENEXA Documentation
 sidebar: mydoc_sidebar
 toc: false
