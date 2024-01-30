@@ -1,5 +1,5 @@
 ---
-title: Shared Directory
+title: Meta Data
 keywords: ENEXA Documentation
 sidebar: mydoc_sidebar
 toc: false
@@ -7,8 +7,44 @@ permalink: metadata.html
 folder: mydoc
 ---
 
-# Experiment Meta Data
-## Image Identifiers
+The ENEXA platform is highly dependent on using meta data. It is used to provide information for modules and keep track of files and past activities. The platform uses an RDF triple store to manage the meta data of the different experiments. In the following, we explain the ontologies that are used and how the platform generates image identifiers.
+
+## Ontologies
+
+The platform reuses existing ontologies but also defines new ontologies where needed. The following figure gives an overview of the Algorithm and the ENEXA ontologies.
+
+![ENEXA ontologies](/images/ENEXA-Ontology.svg)
+
+The purple classes origin from [PROV-O](https://www.w3.org/TR/prov-o/). The yellow and green classes belong to the Aglorithm and the ENEXA ontologies, respectively.
+
+### Algorithm Ontology
+```
+@prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/>
+```
+
+The algorithm ontology is used by us to describe the general information about algorithms. In the sense of this ontology, an algorithm is some implementation that has the ability to take input parameters and produce results. 
+
+#### Classes
+
+| Name | Description |
+|------|-------------|
+| `alg:Algorithm` | An instance of this class is some implementation that has the ability to take input parameters and produce results. It also can typically be run several times with different parameters and different results. |
+| `alg:Parameter` | This is the class of parameters that an algorithm can take. |
+| `alg:Result` | This is the class of results an algorithm can produce. |
+| `alg:AlgorithmDataRelation` | This is the super class of `alg:Parameter` and `alg:Result`. This super class gives the opportunity to define further classes and properties that can be used with both—parameters and results. |
+| `alg:AlgorithmSetup` | An instance of this class describes a set of parameters, i.e., a setup in which an algorithm can be run. |
+| `alg:AlgorithmExecution` | An instance of this class describes a set of parameters, i.e., a setup in which an algorithm can be run. |
+
+#### Properties
+
+### ENEXA Ontology
+```
+@prefix enexa: <http://w3id.org/dice-research/enexa/ontology#>
+```
+
+
+## Experiment Meta Data
+### Image Identifiers
 Using images that can be downloaded and executed is a central part of the ENEXA architecture. At the moment, the project focuses on Docker images in practice. However, the project’s meta data structure shouldn’t be bound to the Docker technology and allow the usage of other containerization technologies in the future.
 The meta data of ENEXA modules has to be able to refer to Docker images that the platform should execute. Similarly, the experiment meta data has to contain the Docker images that have been executed throughout an experiment. However, the Docker image identifiers used in these two cases might be different. In practice, people use either only the image name (which is interpreted to use the latest image at run time) or an image name with a version tag. However, tags can be changed over time (the “latest” tag or major version tags are good example for changing tags), i.e., although the identifier remains the same, the image changes. Hence, for keeping track of used images, an exact identifier is needed, which can be created by combining the image name with the hash of the image. If executed, it forces Docker to use an exact version of the image. We distinguish these two types of identifiers as tagged identifiers and hashed identifiers.
 While the HOBBIT project made use of literals for image identifiers, we propose to represent them as RDF resources. As IRI for these resources, the usage of a URN namepace seems to be adequate (Note that we do not work with an official name space). The URN starts with an hierarchical structure:
