@@ -17,10 +17,18 @@ The platform reuses existing ontologies but also defines new ontologies where ne
 
 The purple classes origin from [PROV-O](https://www.w3.org/TR/prov-o/). The yellow and green classes belong to the Aglorithm and the ENEXA ontologies, respectively.
 
+The prefixes used within the image and in the following are:
+```
+@prefix alg:    <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
+@prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
+@prefix hobbit: <http://w3id.org/hobbit/vocab#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+```
+
 ### Algorithm Ontology
-```
-@prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/>
-```
 
 The algorithm ontology is used by us to describe the general information about algorithms. In the sense of this ontology, an algorithm is some implementation that has the ability to take input parameters and produce results. 
 
@@ -33,14 +41,19 @@ The algorithm ontology is used by us to describe the general information about a
 | `alg:Result` | This is the class of results an algorithm can produce. |
 | `alg:AlgorithmDataRelation` | This is the super class of `alg:Parameter` and `alg:Result`. This super class gives the opportunity to define further classes and properties that can be used with both—parameters and results. |
 | `alg:AlgorithmSetup` | An instance of this class describes a set of parameters, i.e., a setup in which an algorithm can be run. |
-| `alg:AlgorithmExecution` | An instance of this class describes a set of parameters, i.e., a setup in which an algorithm can be run. |
+| `alg:AlgorithmExecution` | An instance of this class represents the execution of a particular algorithm with a particular set of parameter values and results that are produced. Since this is something that took place, it is designed as a sub class of `prov:Activity`. Algorithm executions can have sub executions that run within them. |
+| `alg:Error` | This class represents errors and we plan to use it to ease the representation and retrieval of errors within the meta data graph. An error is a special case of a `prov:Entity` and is connected by `prov:wasGeneratedBy` with an `alg:AlgorithmExecution` during which it occurred. |
 
 #### Properties
 
+| Name | Domain | Range | Description |
+|------|--------|-------|-------------|
+| `alg:instanceOf` | `alg:AlgorithmExecution` | `alg:Algorithm` | This property is used to connect an algorithm execution with the algorithm that it executed. |
+| `alg:parameter` | `alg:Algorithm` | `alg:Parameter` | This property connects an algorithm with the definition of one of its parameters. |
+| `alg:produces` | `alg:Algorithm` | `alg:Parameter` | This property connects an algorithm with the definition of one of its results. |
+| `alg:subExecution` | `alg:AlgorithmExecution` | `alg:AlgorithmExecution` | This property can be used to connect two algorithm execution instances with each other. The parent execution points to its child execution. |
+
 ### ENEXA Ontology
-```
-@prefix enexa: <http://w3id.org/dice-research/enexa/ontology#>
-```
 
 
 ## Experiment Meta Data
