@@ -52,10 +52,10 @@ entries:
       url: /workflow.html
       output: web, pdf
 
-      subfolders:
-        - title: Platform Deployment
-          output: web, pdf
-          subfolderitems:
+#      subfolders:
+#        - title: Platform Deployment
+#          output: web, pdf
+#          subfolderitems:
 
 #            - title: Requirements
 #              url: /requirements.html
@@ -69,25 +69,25 @@ entries:
 #              url: /troubleshooting.html
 #              output: web, pdf
             
-            - title: Env. Variables
-              url: /parameters_env.html
-              output: web, pdf
+    - title: Env. Variables
+      url: /parameters_env.html
+      output: web, pdf
 
-            - title: Shared Directory
-              url: /shared_directory.html
-              output: web, pdf
+    - title: Shared Directory
+      url: /shared_directory.html
+      output: web, pdf
               
-            - title: Metadata
-              url: /metadata.html
-              output: web, pdf
+    - title: Metadata
+      url: /metadata.html
+      output: web, pdf
 
 #            - title: Volumes
 #              url: /parameters_volumes.html
 #              output: web, pdf
           
-            - title: demo
-              url: /demo.html
-              output: web, pdf
+    - title: demo
+      url: /demo.html
+      output: web, pdf
 
 #        - title: Platform Components
 #          output: web, pdf
