@@ -9,7 +9,7 @@ folder: mydoc
 
 The main goals of the ENEXA platform is to ease the usage of the technical outcomes of the [ENEXA project](https://enexa.eu/) by coupling the technical parts through data sharing and [containerization](https://www.docker.com/what-docker). The ENEXA platform is based on the general idea that a user application comprises one or more experiments. The platform has the goal to support the execution of these experiments by providing reusable modules and a framework that supports the easy usage of these modules. The following figure shows an overview over the (simplified) architecture of the platform.
 
-![component diagram](/images/Enexa-Architecture-Sep-23.svg)
+![ENEXA architecture](/images/Enexa-Architecture-Sep-23.svg)
 
 The different colors in the figure show the four different parts of the platform. The blue layer on the bottom shows the data layer, that is used to share data and services. The green layer is the exeuction layer that contains the modules that are executed. The orange application layer on top contains the application started by the user. The purple rectangle on the side depicts the ENEXA service that offers functionalities needed by the application, e.g., to start and stop ENEXA modules. A special role plays the meta data store. It is located in the data layer and all modules and applications have access to it. However, the ENEXA service makes use of it to record the progress of an experiment and to provide necessary meta data to the different platform components.
 
