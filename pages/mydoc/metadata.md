@@ -13,7 +13,7 @@ The ENEXA platform is highly dependent on using meta data. It is used to provide
 
 The platform reuses existing ontologies but also defines new ontologies where needed. The following figure gives an overview of the Algorithm and the ENEXA ontologies.
 
-![ENEXA ontologies](/images/ENEXA-Ontology.svg)
+![ENEXA ontologies](/documentation/images/ENEXA-Ontology.svg)
 
 The purple classes origin from [PROV-O](https://www.w3.org/TR/prov-o/). The yellow and green classes belong to the Aglorithm and the ENEXA ontologies, respectively.
 
