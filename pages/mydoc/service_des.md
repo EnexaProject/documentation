@@ -30,11 +30,34 @@ folder: mydoc
 | Description | The service sets up the environment for a new experiment |
 | Type |-	HTTP POST -	synchronous  |
 | Parameters |  |
-| Steps |1.	Generate experiment IRI and create its meta data <br> 2.	Create shared directory <br> 3.	Start default containers <br> 4.	Update experiment meta data with data from steps 2 and 3  |
 | Response type| JSON-LD |
-| Response content |-	Experiment IRI -	Meta data SPARQL endpoint URL -	Shared directory path  |
-| Errors | ·	HTTP 500:o	The service was not able to perform one of the necessary steps |
+| Response content |-Experiment IRI <br/>-Meta data SPARQL endpoint URL <br/>-Shared directory path |
+| Errors | ·	HTTP 500:	The service was not able to perform one of the necessary steps |
 
+#### Example
+request
+```
+POST /start-experiment HTTP/1.1
+Content-Type: application/ld+json
+Accept: application/ld+json
+```
+
+response 
+```json lines
+{
+    "@id": "http://example.org/enexa/84b67db3-ee8f-4f47-9f81-25b3d34df09d",
+    "http://w3id.org/dice-research/enexa/ontology#metaDataGraph": {
+        "@id": "http://example.org/meta-data"
+    },
+    "http://w3id.org/dice-research/enexa/ontology#metaDataEndpoint": {
+        "@id": "http://localhost:3030/mydataset"
+    },
+    "http://w3id.org/dice-research/enexa/ontology#sharedDirectory": "enexa-dir://app2/84b67db3-ee8f-4f47-9f81-25b3d34df09d",
+    "@type": "http://w3id.org/dice-research/enexa/ontology#Experiment"
+}
+```
+
+<hr>
 
 | Name                | Meta data endpoint                                    |
 |---------------------|-------------------------------------------------------|
@@ -42,8 +65,7 @@ folder: mydoc
 | Description         | This method returns the URL of a SPARQL endpoint and the IRI of the graph within this endpoint that contains the meta data for the experiment with the given IRI. |
 | Type                | - HTTP GET                                            |
 |                     | - synchronous                                         |
-| Parameters          | - experiment = Experiment IRI                          |
-| Steps               | 1. Look up the SPARQL endpoint URL and the graph IRI  |
+| Parameters          | - experimentIRI = Experiment IRI                          |
 | Response type       | JSON-LD                                               |
 | Response content    | - Meta data SPARQL endpoint URL                       |
 |                     | - Meta data graph IRI (same response schema as /start-experiment) |
@@ -51,7 +73,27 @@ folder: mydoc
 |                     |   - Experiment IRI is not known / not available.      |
 |                     | - HTTP 500:                                           |
 |                     |   - There is no such SPARQL endpoint available.       |
+#### Example
+request
+```
+GET /meta?experimentIRI=http://example.org/enexa/84b67db3-ee8f-4f47-9f81-25b3d34df09d
+```
 
+response
+```json lines
+{
+  "@id": "http://example.org/enexa/84b67db3-ee8f-4f47-9f81-25b3d34df09d",
+  "http://w3id.org/dice-research/enexa/ontology#metaDataGraph": {
+    "@id": "http://example.org/meta-data"
+  },
+  "http://w3id.org/dice-research/enexa/ontology#metaDataEndpoint": {
+    "@id": "http://localhost:3030/mydataset"
+  },
+  "@type": "http://w3id.org/dice-research/enexa/ontology#Experiment"
+}
+```
+
+<hr>
 
 | Name                        | Start a module or container                                    |
 |-----------------------------|---------------------------------------------------------------|
@@ -64,16 +106,6 @@ folder: mydoc
 |                             | - module-url = location of the module’s meta data (optional)   |
 |                             | - parameters = key-value pairs of the module’s parameters (predicate-object pairs, optional) |
 | Parameter type              | multipart/form-data, RDF (e.g., JSON-LD)                        |
-| Steps                       | 1. Derive meta data for the module that should be started       |
-|                             |   a. The module IRI is looked up in a local repository (e.g., in a set of files) or, |
-|                             |   b. The module URL (if provided) is accessed via HTTP to load the module with the given IRI; |
-|                             |   c. If the first two attempts are not possible or do not give any result, the module IRI is dereferenced to download the meta data. If the data contains more than one module, the “latest” (i.e., the one with the latest publication date) is used. |
-|                             | 2. Create a resource for the new module instance in the meta data graph. Add the parameters and their values. |
-|                             | 3. Start the image                                            |
-|                             |   a. with the ENEXA environmental variables                  |
-|                             |   b. as part of the local network of the ENEXA service.       |
-|                             | 4. Add start time (or error code in case it couldn’t be started) to the experiment’s meta data. |
-|                             | 5. Return the meta data of the newly created container (including its DNS name) |
 | Response type               | JSON-LD                                                       |
 | Response content            | - Meta data of the newly created container                     |
 | Errors                      | - HTTP 400:                                                   |
@@ -82,6 +114,53 @@ folder: mydoc
 |                             | - HTTP 500:                                                   |
 |                             |   o An error occurs while communicating with the Kubernetes service. |
 
+#### Example
+request
+```
+POST /start-container HTTP/1.1
+Content-Type: text/turtle
+Accept: text/turtle
+
+BODY :
+  @prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
+  @prefix prov:   <http://www.w3.org/ns/prov#> .
+
+  [] a prov:Entity ; 
+      enexa:experiment <> ; 
+      enexa:location "/home/farshad/test/enexa/data.owl" .
+
+
+@prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
+    @prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
+    @prefix prov:   <http://www.w3.org/ns/prov#> .
+    @prefix hobbit: <http://w3id.org/hobbit/vocab#> . 
+    @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+    [] rdf:type enexa:ModuleInstance ;
+    enexa:experiment <{{experimentIRI}}> ;
+    alg:instanceOf <http://w3id.org/dice-research/enexa/module/tentris/0.2.0-SNAPSHOT-1> ;
+    <http://w3id.org/dice-research/enexa/module/tentris/parameter/file> <{{ntFile}}>.
+```
+
+response
+```
+@prefix alg:    <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
+@prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
+@prefix hobbit: <http://w3id.org/hobbit/vocab#> .
+@prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://example.org/enexa/8e197678-7852-42ae-a9ec-1d05e1c90db0>
+rdf:type             enexa:ModuleInstance ;
+<http://w3id.org/dice-research/enexa/module/tentris/parameter/file>
+<http://example.org/enexa/7a4dab1b-586c-46b9-a617-cb0db01a8c9c> ;
+enexa:containerId    "66a3d6f6523a8521f7f8daa2957f06a833c865318d98d9491a43cc3adad04f37" ;
+enexa:containerName  "enexa-1379311648" ;
+enexa:experiment     <http://example.org/enexa/84b67db3-ee8f-4f47-9f81-25b3d34df09d> ;
+alg:instanceOf       <http://w3id.org/dice-research/enexa/module/tentris/0.2.0-SNAPSHOT-1> .
+
+```
+
+<hr>
 
 | Name                        | Adds a file to an experiment                                  |
 |-----------------------------|---------------------------------------------------------------|
@@ -93,11 +172,6 @@ folder: mydoc
 |                             | - resource-url = The URL of the resource (optional)            |
 |                             | - target-dir = Target directory in the experiment’s shared directory |
 | Parameter type              | multipart/form-data, RDF (e.g., JSON-LD)                        |
-| Steps                       | 1. If the resource has a known protocol that does not start with the file protocol, the service should try to fetch the data. |
-|                             | 2. Generate file name                                          |
-|                             | 3. Add file to the shared directory                             |
-|                             | 4. Add and return the file’s meta data                          |
-| Response type               | RDF;                                                          |
 |                             | Additionally, plain resource IRI in "Content-Location" HTTP header |
 | Response content            | - Meta data of the newly added file                             |
 | Errors                      | - HTTP 400:                                                   |
@@ -105,37 +179,85 @@ folder: mydoc
 |                             |   o The resource URL does not exist or cannot be downloaded.  |
 |                             | - HTTP 500:                                                   |
 |                             |   o An error occurs while adding the resource.                |
+#### Example
+request
+```
+POST /add-resource HTTP/1.1
+Content-Type: text/turtle
+Accept: text/turtle
 
+BODY :
+  @prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
+  @prefix prov:   <http://www.w3.org/ns/prov#> .
 
-| Name                        | Get the status of a container                                  |
-|-----------------------------|---------------------------------------------------------------|
-| URL                         | /container-status                                            |
+  [] a prov:Entity ; 
+      enexa:experiment <http://example.org/enexa/84b67db3-ee8f-4f47-9f81-25b3d34df09d> ; 
+      enexa:location "/data/example.owl" .
+```
+
+response
+```
+@prefix enexa: <http://w3id.org/dice-research/enexa/ontology#> .
+@prefix prov:  <http://www.w3.org/ns/prov#> .
+
+<http://example.org/enexa/6aed91d2-4ff1-426e-9c14-4572d2a8960e>
+a                 prov:Entity ;
+enexa:experiment  <http://example.org/enexa/84b67db3-ee8f-4f47-9f81-25b3d34df09d> ;
+enexa:location    "/home/farshad/test/enexa/data.owl" .
+```
+
+<hr>
+
+| Name                        | Get the status of a container                                                                                |
+|-----------------------------|--------------------------------------------------------------------------------------------------------------|
+| URL                         | /container-status                                                                                            |
 | Description                 | This method returns status information for the given container that is gathered from the Kubernetes service. |
-| Type                        | - HTTP GET                                                    |
-|                             | - synchronous                                                  |
-| Parameters                  | - experiment = Experiment IRI                                   |
-|                             | - container = Container IRI (or DNS name)                      |
-| Steps                       | 1. Get the container status from the Kubernetes service and transform it into RDF |
-| Response type               | Some RDF serialization                                        |
-| Response content            | - The status of the container expressed as RDF. This could also express that the container does not exist. |
-| Errors                      | - HTTP 400:                                                   |
-|                             |   o Experiment IRI is not known / not available.              |
-|                             | - HTTP 500:                                                   |
-|                             |   o An error occurs while communicating with the Kubernetes service. |
+| Type                        | - HTTP POST                                                                                                  |
+|                             | - synchronous                                                                                                |
+| Parameters                  | - experiment = Experiment IRI                                                                                |
+|                             | - container = Container IRI (or DNS name)                                                                    |
+| Response type               | Some RDF serialization                                                                                       |
+| Response content            | - The status of the container expressed as RDF. This could also express that the container does not exist.   |
+| Errors                      | - HTTP 400:                                                                                                  |
+|                             | o Experiment IRI is not known / not available.                                                               |
+|                             | - HTTP 500:                                                                                                  |
+|                             | o An error occurs while communicating with the Kubernetes service.                                           |
+
+#### Example
+request
+```
+POST /add-resource HTTP/1.1
+Content-Type: application/json
+Accept: text/turtle
+
+BODY :
+  {
+    "moduleInstanceIRI":"http://example.org/enexa/832cf09e-b98f-40e8-b20c-fc1ecddc9424",
+    "experimentIRI":"{{experimentIRI}}"
+  }
+```
+
+response
+```
+<http://example.org/enexa/832cf09e-b98f-40e8-b20c-fc1ecddc9424>
+        <http://w3id.org/dice-research/enexa/ontology#containerStatus>
+                "running" ;
+        <http://w3id.org/dice-research/enexa/ontology#experiment>
+                <http://example.org/enexa/84b67db3-ee8f-4f47-9f81-25b3d34df09d> .
+```
+
+<hr>
 
 
 | Name                        | Finish a container of the experiment                            |
 |-----------------------------|---------------------------------------------------------------|
-| URL                         | /finish-container                                             |
+| URL                         | /stop-container                                           |
 | Description                 | This method terminates a container that is part of the experiment. |
 | Type                        | - HTTP POST                                                   |
 |                             | - synchronous                                                  |
 | Parameters                  | - experiment = Experiment IRI                                   |
 |                             | - container IRI                                               |
 | Parameter type              | multipart/form-data, RDF (e.g., JSON-LD)                        |
-| Steps                       | 1. Iterate over the experiment’s containers and search for the container with the given IRI |
-|                             | 2. Stop the container                                          |
-|                             | 3. Update the experiment meta data (e.g., the file location of a SPARQL endpoint’s content) |
 | Response type               | —                                                             |
 | Response content            | HTTP 200                                                       |
 | Errors                      | - HTTP 400:                                                   |
@@ -144,7 +266,31 @@ folder: mydoc
 |                             | - HTTP 500:                                                   |
 |                             |   o An error occurs while communicating with the Kubernetes service. |
 
+#### Example
+request
+```
+POST /stop-container HTTP/1.1
+Content-Type: text/turtle
+Accept: text/turtle
 
+BODY :
+@prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://example.org/enexa/832cf09e-b98f-40e8-b20c-fc1ecddc9424>
+        rdf:type             enexa:ModuleInstance ;        
+        enexa:containerId    "9a3e9c3c8b74631aad4f0ffd9c24eabfc923d7ac54d8b203363ddc0e29e36fe3" ;        
+        enexa:experiment     <http://example.org/enexa/84b67db3-ee8f-4f47-9f81-25b3d34df09d>  .
+```
+
+response
+```
+<9a3e9c3c8b74631aad4f0ffd9c24eabfc923d7ac54d8b203363ddc0e29e36fe3>
+        <http://w3id.org/dice-research/enexa/ontology#experiment>
+                <http://example.org/enexa/84b67db3-ee8f-4f47-9f81-25b3d34df09d> .
+```
+
+<hr>
 | Name                        | Finish an experiment                                           |
 |-----------------------------|---------------------------------------------------------------|
 | URL                         | /finish-experiment                                           |
@@ -153,8 +299,6 @@ folder: mydoc
 |                             | - synchronous                                                  |
 | Parameters                  | - experiment = Experiment IRI                                   |
 | Parameter type              | multipart/form-data, RDF (e.g., JSON-LD)                        |
-| Steps                       | 1. Iterate over the experiment’s containers and stop them      |
-|                             | 2. Update the experiment meta data (e.g., the file location of a SPARQL endpoint’s content) |
 | Response type               | —                                                             |
 | Response content            | HTTP 200                                                       |
 | Errors                      | - HTTP 400:                                                   |

@@ -85,7 +85,7 @@ entries:
 #              url: /parameters_volumes.html
 #              output: web, pdf
           
-    - title: demo
+    - title: Demo
       url: /demo.html
       output: web, pdf
 
