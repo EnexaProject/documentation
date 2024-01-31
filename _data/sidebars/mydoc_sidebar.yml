@@ -21,18 +21,18 @@ entries:
 
   - title: Introduction
     url: /index.html
-    output: toplevel, pdf
+    output: toplevel, web, pdf
     type: homepage
 
-  - title: Platform Overview
+  - title: Overview
     url: /overview.html
-    output: toplevel, pdf
+    output: toplevel, web, pdf
 
   - title: Tutorials
     output: web, pdf
     folderitems:
 
-    - title: Quick Guide
+    - title: Quick Deployment Guide
       url: /quick_guide.html
       output: web, pdf
 
@@ -40,8 +40,8 @@ entries:
 #      url: /docker.html
 #      output: web, pdf
 
-    - title: How to develop your module
-      url : /how_module.html
+    - title: Module Development
+      url : /module_dev.html
       output: web, pdf
 
   - title: Reference Manual
@@ -92,7 +92,7 @@ entries:
 #        - title: Platform Components
 #          output: web, pdf
 
-    - title: Service description
+    - title: ENEXA Service
       url: /service_des.html
       output: web, pdf
 
