@@ -17,6 +17,7 @@ folder: mydoc
 
 - The service needs to be able to interact with the containerization software (e.g., Kubernetes)
 
+- You can use the Postman collection to use api [collection](https://github.com/EnexaProject/enexa-service/blob/develop-ImplementTheUsageOfDirectories/ENEXA.postman_collection.json) 
 # REST API
 
 - RDF serialization:
