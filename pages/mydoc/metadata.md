@@ -13,7 +13,7 @@ The ENEXA platform is highly dependent on using meta data. It is used to communi
 
 The platform reuses existing ontologies but also defines new ontologies where needed. The following figure gives an overview of the Algorithm and the ENEXA ontologies.
 
-![ENEXA ontologies](/documentation/images/ENEXA-Ontology.svg)
+![ENEXA ontologies](/documentation/images/ENEXA-Ontology-150.svg)
 
 The purple classes origin from [PROV-O](https://www.w3.org/TR/prov-o/). The yellow and green classes belong to the Aglorithm and the ENEXA ontologies, respectively.
 
@@ -48,7 +48,7 @@ The algorithm ontology is used by us to describe the general information about a
 
 | Name | Domain | Range | Description |
 |------|--------|-------|-------------|
-| `alg:instanceOf` | `alg:AlgorithmSetup` | `alg:Algorithm` | This property is used to connect an algorithm setup or algorithm execution with the algorithm that it plans to execute or that it already executed. |
+| `alg:executes` | `alg:AlgorithmSetup` | `alg:Algorithm` | This property is used to connect an algorithm setup or algorithm execution with the algorithm that it plans to execute or that it already executed. |
 | `alg:parameter` | `alg:Algorithm` | `alg:Parameter` | This property connects an algorithm with the definition of one of its parameters. |
 | `alg:produces` | `alg:Algorithm` | `alg:Parameter` | This property connects an algorithm with the definition of one of its results. |
 | `alg:subExecution` | `alg:AlgorithmExecution` | `alg:AlgorithmExecution` | This property can be used to connect two algorithm execution instances with each other. The parent execution points to its child execution. |
@@ -84,7 +84,7 @@ Using images that can be downloaded and executed is a central part of the ENEXA 
 
 Similarly, the experiment meta data has to contain the Docker images that have been executed throughout an experiment. However, the Docker image identifiers used in these two cases might be different. In practice, people use either only the image name (which is interpreted to use the latest image at run time) or an image name with a version tag. However, tags can be changed over time (the “latest” tag or major version tags are good example for changing tags), i.e., although the identifier remains the same, the image changes. Hence, for keeping track of used images, an exact identifier is needed, which can be created by combining the image name with the hash of the image. If executed, it forces the underlying container system (e.g., Docker) to use an exact version of the image. We distinguish these two types of identifiers as tagged identifiers and hashed identifiers.
 
-While other projects (e.g., HOBBIT) made use of literals for image identifiers, we propose to represent them as RDF resources. As IRI for these resources, the usage of a URN namepace seems to be adequate (Note that we do not work with an official name space). The URN starts with an hierarchical structure:
+While other projects (e.g., HOBBIT) made use of literals for image identifiers, we propose to represent them as IRI. The usage of a URN namepace seems to be adequate for such IRIs (Note that we do not work with an official name space). The URN starts with an hierarchical structure:
 ```
  urn:container:docker:image:
 ```
@@ -95,24 +95,23 @@ Our suggestion is to use the following structure for Docker image identifiers (<
 urn:container:docker:image:(<registry[:port]>/<path>/<image>(:<tag>)|(@<hash>))|(@<hash>)
 ```
 
-The first variant is the image name with a tag. For example:
+The first variant is the image name with a tag. Two examples are the following:
 ```
+urn:container:docker:image:hub.cs.upb.de/enexa/images/enexa-extraction-module:1.0.0
 urn:container:docker:image:docker.io/library/dicegroup/dice-embeddings:0.1.3
 ```
-
-The first variant is the image name with a tag. For example:
-```
-urn:container:docker:image:docker.io/library/busybox:latest
-```
+Note that in the second example the default registry (docker hub) is mentioned explicitly as part of the IRI using `docker.io/library`.
 
 the second variant is the image name with a hash that identifies the version of the image. for example:
 ```
 urn:container:docker:image:docker.io/library/busybox@sha256:3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
 ```
-This image identifier can be used to download the image (e.g., using `docker pull`). It is called `RepoDigest` in the image and represents the hash of the image's manifest. However, a manifest may contain many images for different platforms and this hash alone doesn't seem to be enough to run a new instance of the image (i.e., it doesn't work with `docker run`). Hence, storing only this identifier is not enough. In addition, ENEXA stores another hash, which is represented as third variant of the general IRI defined above:
+Instead of a tag as in the first variant, we use a hash comprising the hash algorithm (in this case `sha256`) followed by the hash value. This image identifier can be used to download the image (e.g., using `docker pull`). It is called `RepoDigest` in the image' metadata and represents the hash of the image's manifest. However, a manifest may contain many images for different platforms and this hash alone doesn't seem to be enough to run a new instance of the image (i.e., it doesn't work with `docker run`). Hence, storing only this identifier is not enough. In addition, ENEXA stores another hash, which is represented as third variant of the general IRI defined above:
 ``` 
 urn:container:docker:image:sha256:a416a98b71e224a31ee99cff8e16063554498227d2b696152a9c3e0aa65e5824
 ```
-This hash cannot be used to pull the image, but it is a unique identifier for the image that has been executed.
+This hash cannot be used to pull the image, but it is a unique identifier that can be used to execute the same image again (e.g., using `docker run`).
+
+(Note that if we refer to Docker commands, we use image identifiers without the `urn:container:docker:image:` prefix)
 
 
