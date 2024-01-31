@@ -41,14 +41,14 @@ The algorithm ontology is used by us to describe the general information about a
 | `alg:Result` | This is the class of results an algorithm can produce. |
 | `alg:AlgorithmDataRelation` | This is the super class of `alg:Parameter` and `alg:Result`. This super class gives the opportunity to define further classes and properties that can be used with both—parameters and results. |
 | `alg:AlgorithmSetup` | An instance of this class describes a set of parameters, i.e., a setup in which an algorithm can be run. |
-| `alg:AlgorithmExecution` | An instance of this class represents the execution of a particular algorithm with a particular set of parameter values and results that are produced. Since this is something that took place, it is designed as a sub class of `prov:Activity`. Algorithm executions can have sub executions that run within them. |
+| `alg:AlgorithmExecution` | An instance of this class represents the execution of a particular algorithm with a particular set of parameter values and results that are produced. Since this is something that took place, it is designed as a sub class of `prov:Activity`. It is also an extension of the `alg:AlgorithmSetup` class since an algorithm execution is a concrete implementation of a setup. Algorithm executions can have sub executions that run within them. |
 | `alg:Error` | This class represents errors and we plan to use it to ease the representation and retrieval of errors within the meta data graph. An error is a special case of a `prov:Entity` and is connected by `prov:wasGeneratedBy` with an `alg:AlgorithmExecution` during which it occurred. |
 
 #### Properties
 
 | Name | Domain | Range | Description |
 |------|--------|-------|-------------|
-| `alg:instanceOf` | `alg:AlgorithmExecution` | `alg:Algorithm` | This property is used to connect an algorithm execution with the algorithm that it executed. |
+| `alg:instanceOf` | `alg:AlgorithmSetup` | `alg:Algorithm` | This property is used to connect an algorithm setup or algorithm execution with the algorithm that it plans to execute or that it already executed. |
 | `alg:parameter` | `alg:Algorithm` | `alg:Parameter` | This property connects an algorithm with the definition of one of its parameters. |
 | `alg:produces` | `alg:Algorithm` | `alg:Parameter` | This property connects an algorithm with the definition of one of its results. |
 | `alg:subExecution` | `alg:AlgorithmExecution` | `alg:AlgorithmExecution` | This property can be used to connect two algorithm execution instances with each other. The parent execution points to its child execution. |
