@@ -110,7 +110,8 @@ the second variant is the image name with a hash that identifies the version of 
 urn:container:docker:image:docker.io/library/busybox@sha256:3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
 ```
 This image identifier can be used to download the image (e.g., using `docker pull`). It is called `RepoDigest` in the image and represents the hash of the image's manifest. However, a manifest may contain many images for different platforms and this hash alone doesn't seem to be enough to run a new instance of the image (i.e., it doesn't work with `docker run`). Hence, storing only this identifier is not enough. In addition, ENEXA stores another hash, which is represented as third variant of the general IRI defined above:
-```	urn:container:docker:image:sha256:a416a98b71e224a31ee99cff8e16063554498227d2b696152a9c3e0aa65e5824
+``` 
+urn:container:docker:image:sha256:a416a98b71e224a31ee99cff8e16063554498227d2b696152a9c3e0aa65e5824
 ```
 This hash cannot be used to pull the image, but it is a unique identifier for the image that has been executed.
 
