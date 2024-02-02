@@ -21,12 +21,12 @@ entries:
 
   - title: Introduction
     url: /index.html
-    output: toplevel, web, pdf
+    output: web, pdf
     type: homepage
 
   - title: Overview
     url: /overview.html
-    output: toplevel, web, pdf
+    output:  web, pdf
 
   - title: Tutorials
     output: web, pdf
@@ -98,7 +98,7 @@ entries:
 
 
 #    - title: General Platform API
-#      url: /platform_api.html
+#      url: 1/platform_api.html
 #      output: web, pdf
 #
 #    - title: FAQ
@@ -111,4 +111,8 @@ entries:
 
     - title: Modules Overview
       url: /modules_overview.html
+      output: web, pdf
+
+    - title: Enexa java utils
+      url: /enexa-java-utils.html
       output: web, pdf
