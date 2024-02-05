@@ -113,6 +113,10 @@ entries:
       url: /modules_overview.html
       output: web, pdf
 
+    - title: enexa-utils
+      url: /enexa-utils.html
+      output: web, pdf
+
     - title: Enexa java utils
       url: /enexa-java-utils.html
       output: web, pdf
