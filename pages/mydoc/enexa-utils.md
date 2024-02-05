@@ -1,5 +1,5 @@
 ---
-title: enexa-utils
+title: Enexa Utils
 keywords: ENEXA Documentation
 sidebar: mydoc_sidebar
 toc: false

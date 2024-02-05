@@ -7,9 +7,8 @@ permalink: workflow.html
 folder: mydoc
 ---
 
-# Enexa Workflow
 
-# Example Of One Workflow
+## Example Of One Workflow
 The following example shows the general workflow of an experiment on the ENEXA platform.
 
 1. The ENEXA service is started with the ENEXA volume mounted.

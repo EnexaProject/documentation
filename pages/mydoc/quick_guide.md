@@ -6,7 +6,7 @@ toc: false
 permalink: quick_guide.html
 folder: mydoc
 ---
-# How run the service 
+## How run the service 
 - In metadata directory put all needed metadata files
 - Dedicate a directory as a shared directory  
 

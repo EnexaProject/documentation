@@ -1,14 +1,11 @@
 ---
-title: Meta Data
+title: Enexa Java Utils
 keywords: ENEXA Documentation
 sidebar: mydoc_sidebar
 toc: false
 permalink: enexa-java-utils.html
 folder: mydoc
 ---
-
-# Enexa Java Utils
-
 The `EnexaPathUtils` class, part of the Enexa Project, serves as a valuable utility for translating file paths between the ENEXA metadata graph and local file systems. This Java utility simplifies the process of converting paths, providing a seamless integration between ENEXA-specific path representations and their corresponding local file system equivalents.
 
 ## Key Features

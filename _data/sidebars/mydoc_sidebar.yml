@@ -96,6 +96,14 @@ entries:
       url: /service_des.html
       output: web, pdf
 
+    - title: Enexa-utils
+      url: /enexa-utils.html
+      output: web, pdf
+
+    - title: Enexa java utils
+      url: /enexa-java-utils.html
+      output: web, pdf
+
 
 #    - title: General Platform API
 #      url: 1/platform_api.html
@@ -111,12 +119,4 @@ entries:
 
     - title: Modules Overview
       url: /modules_overview.html
-      output: web, pdf
-
-    - title: Enexa-utils
-      url: /enexa-utils.html
-      output: web, pdf
-
-    - title: Enexa java utils
-      url: /enexa-java-utils.html
       output: web, pdf
