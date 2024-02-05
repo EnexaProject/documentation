@@ -21,12 +21,12 @@ entries:
 
   - title: Introduction
     url: /index.html
-    output: web, pdf
+    output: toplevel, pdf
     type: homepage
 
   - title: Overview
     url: /overview.html
-    output:  web, pdf
+    output:  toplevel, pdf
 
   - title: Tutorials
     output: web, pdf
