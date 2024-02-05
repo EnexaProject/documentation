@@ -113,7 +113,7 @@ entries:
       url: /modules_overview.html
       output: web, pdf
 
-    - title: enexa-utils
+    - title: Enexa-utils
       url: /enexa-utils.html
       output: web, pdf
 
