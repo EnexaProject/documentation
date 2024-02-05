@@ -16,6 +16,65 @@ On these pages, you'll find a variety of ENEXA modules listed below, showcasing 
 ## Extraction module
 
 ## Dice embeddings module
+### DICE Embeddings Module Description
+
+To initiate the DICE Embeddings module within the ENEXA service, submit the following request to the service endpoint '/start-container'. This module, focused on a hardware-agnostic framework for large-scale knowledge graph embeddings, provides a comprehensive guide on training and deploying knowledge graph embedding models.
+
+#### Module Details
+
+- **Module Instance Type:** enexa:ModuleInstance
+- **Experiment:** <[experiment IRI]>
+- **Algorithm Instance:** <http://w3id.org/dice-research/enexa/module/dice-embeddings/1.0.0>
+
+#### Parameters
+
+The DICE Embeddings module requires the following parameters:
+
+- **Batch Size:** {[batch size]}
+- **Embedding Dimension:** {[]embeddings dimension}
+- **Embedding Model:** <http://w3id.org/dice-research/enexa/module/dice-embeddings/algorithm/DistMult>
+- **Number of Epochs:** {[number of epochs]}
+- **Path to Knowledge Graph (KG):** <[]knowledge graph IRI>
+
+```
+@prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
+@prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
+@prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix hobbit: <http://w3id.org/hobbit/vocab#> . 
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+[] rdf:type enexa:ModuleInstance ;
+enexa:experiment <[experiment IRI]> ;
+alg:instanceOf <http://w3id.org/dice-research/enexa/module/dice-embeddings/1.0.0> ;
+<http://w3id.org/dice-research/enexa/module/dice-embeddings/parameter/batch_size> {[batch size]};
+<http://w3id.org/dice-research/enexa/module/dice-embeddings/parameter/embedding_dim> {[]embeddings dimention};
+<http://w3id.org/dice-research/enexa/module/dice-embeddings/parameter/model> <http://w3id.org/dice-research/enexa/module/dice-embeddings/algorithm/DistMult>;
+<http://w3id.org/dice-research/enexa/module/dice-embeddings/parameter/num_epochs> {[number of epochs]};
+<http://w3id.org/dice-research/enexa/module/dice-embeddings/parameter/path_single_kg> <[]knowledge graph IRI>.
+```
+
+#### DICE Embeddings Framework
+
+The DICE Embeddings framework serves as a hardware-agnostic solution for large-scale knowledge graph embeddings. It facilitates the training and deployment of knowledge graph embedding models, offering flexibility across various computing systems, from single CPUs to GPU clusters.
+
+#### Usage Guidelines
+
+This module provides users with a step-by-step guide on leveraging the DICE Embeddings framework. From setting the batch size to determining the embedding dimension and selecting the appropriate model, users can seamlessly integrate knowledge graph embeddings into their experiments.
+
+#### Key Features
+
+1. **Hardware-Agnostic:** DICE Embeddings is designed to be versatile, accommodating a range of computing systems for training and deploying knowledge graph embedding models.
+
+2. **Scalability:** The framework supports large-scale knowledge graphs, making it suitable for projects with extensive data requirements.
+
+3. **Pretrained Models:** The repository accompanying the module includes code, documentation, and pretrained models, expediting the integration process.
+
+#### Getting Started
+
+To get started with DICE Embeddings, send the provided module instance details to the '/start-container' endpoint, ensuring to replace placeholders with the appropriate experiment, batch size, embeddings dimension, number of epochs, and knowledge graph IRI. The module empowers users to harness the capabilities of a hardware-agnostic framework for large-scale knowledge graph embeddings.
+
+[also visit the project repository page](https://github.com/dice-group/dice-embeddings) 
+
 
 ## Dice CEL module
 
