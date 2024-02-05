@@ -19,6 +19,57 @@ On these pages, you'll find a variety of ENEXA modules listed below, showcasing 
 
 ## Dice CEL module
 
+### CEL Training Module Description
+
+To initiate the CEL Training module within the ENEXA service, submit the following request to the service endpoint '/start-container'. This module, based on Class Expression Learning (CEL), is a powerful tool for automatically learning class expressions in knowledge graphs.
+```
+@prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
+    @prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
+    @prefix prov:   <http://www.w3.org/ns/prov#> .
+    @prefix hobbit: <http://w3id.org/hobbit/vocab#> . 
+    @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+    @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+    [] rdf:type enexa:ModuleInstance ;
+    enexa:experiment <[replace this with experimentIRI]> ;
+    alg:instanceOf <http://w3id.org/dice-research/enexa/module/cel-train/1.0.0> ;
+    <http://w3id.org/dice-research/enexa/module/cel-train/parameter/kg> <[replace with owl file iri]>;
+    <http://w3id.org/dice-research/enexa/module/cel-train/parameter/kge> <[replace with embedding iri]>.
+```
+
+
+#### Class Expression Learning (CEL)
+
+CEL is a machine learning method specifically tailored for learning class expressions within knowledge graphs. In the realm of knowledge graphs, class expressions serve as descriptions of the properties of entities. For instance, a class expression could define all individuals residing in a specific city or all products manufactured by a particular company.
+
+#### Usage Guidelines
+
+This module equips users with the capability to automatically learn complex class expressions from their knowledge graphs. By initiating the CEL Training module, users can harness machine learning techniques to derive meaningful insights and patterns from their data.
+
+#### Getting Started
+
+To get started with CEL Training, send the provided module instance details to the '/start-container' endpoint, ensuring to replace placeholders with the appropriate experiment and file IRIs. The module empowers users to enhance their understanding of knowledge graph entities and relationships through automated class expression learning.
+
+### Serve after training
+this module can serve a http endpoint and accept requests , for starting the service for this the bellow request should send  
+```
+@prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
+        @prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
+        @prefix prov:   <http://www.w3.org/ns/prov#> .
+        @prefix hobbit: <http://w3id.org/hobbit/vocab#> . 
+        @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+        @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+        [] rdf:type enexa:ModuleInstance ;
+        enexa:experiment <[experimentIRI]> ;
+        alg:instanceOf <http://w3id.org/dice-research/enexa/module/cel-deploy/1.0.0> ;
+        <http://w3id.org/dice-research/enexa/module/cel-deploy/parameter/kg> <[owl_file_iri same ]>;
+        <http://w3id.org/dice-research/enexa/module/cel-deploy/parameter/kge> <[embedding_csv_iri]>;
+        <http://w3id.org/dice-research/enexa/module/cel-deploy/parameter/heuristics> <[ cel_trained_file_kge_iri , it is the iri generated from last step]>.
+```
+after this request can send to the api  
+```
+http://[container name]:7860/predict
+```
+
 ## TENTRIS module
 ### what is this module 
 ### Tentris Module Description
