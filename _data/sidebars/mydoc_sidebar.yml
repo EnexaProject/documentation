@@ -20,12 +20,12 @@ entries:
       type: frontmatter
 
   - title: Introduction
-    url: /index.html
+    url: /documentation/index.html
     output: toplevel, pdf
     type: homepage
 
   - title: Overview
-    url: /overview.html
+    url: /documentation/overview.html
     output:  toplevel, pdf
 
   - title: Tutorials
