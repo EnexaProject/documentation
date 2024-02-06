@@ -1,5 +1,5 @@
 ---
-title: How develop a module 
+title: Developing an ENEXA Module 
 keywords: ENEXA Documentation
 sidebar: mydoc_sidebar
 toc: false
