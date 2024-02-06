@@ -96,11 +96,11 @@ entries:
       url: /service_des.html
       output: web, pdf
 
-    - title: Enexa-utils
+    - title: Enexa Utils
       url: /enexa-utils.html
       output: web, pdf
 
-    - title: Enexa java utils
+    - title: Enexa Java Utils
       url: /enexa-java-utils.html
       output: web, pdf
 
