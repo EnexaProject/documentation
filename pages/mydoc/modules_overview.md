@@ -11,6 +11,39 @@ On these pages, you'll find a variety of ENEXA modules listed below, showcasing 
 
 ## Transform module
 
+### ENEXA RDF Transformation Module
+
+The ENEXA RDF Transformation module is a straightforward tool designed for transforming RDF data. It takes one or more RDF files as input and generates a single RDF file as output. This module is particularly useful for consolidating RDF data from multiple sources into a unified format.
+
+#### Goal
+
+The primary objective of this module is to merge RDF datasets into a single RDF file while ensuring compatibility with Apache Jena-supported RDF serializations. Key considerations for input files include:
+
+- **Supported RDF Serialization:** Input files must utilize an RDF serialization supported by Apache Jena.
+- **Compression:** Input files can be compressed with GZIP or BZip2 for efficient data storage and transmission.
+- **Metadata Graph:** Input files should include mime type information in the metadata graph. If absent, the module will infer the RDF serialization based on the file extension.
+
+The output file:
+
+- Contains all triples from the input RDF datasets without deduplication.
+- Adheres to the specified RDF serialization, supporting streamable formats such as Turtle, N-Triples, N-Quads, and TriG.
+
+you can send request like bellow to '/start-container' api
+```
+@prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
+@prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
+@prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix hobbit: <http://w3id.org/hobbit/vocab#> . 
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+[] rdf:type enexa:ModuleInstance ;
+enexa:experiment <[Experiment IRI]> ;
+alg:instanceOf <http://w3id.org/dice-research/enexa/module/transform/0.0.1> ;
+<http://w3id.org/dice-research/enexa/module/transform/parameter/input> <[First input]>;
+<http://w3id.org/dice-research/enexa/module/transform/parameter/input> <[Second input]>;
+<http://w3id.org/dice-research/enexa/module/transform/parameter/outputMediaType> <https://www.iana.org/assignments/media-types/application/owl+xml>.
+
+```
+
 ## KG fixing module
 
 ## Extraction module
