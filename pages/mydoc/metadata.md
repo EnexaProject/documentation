@@ -71,11 +71,11 @@ The algorithm ontology is used by us to describe the general information about a
 |------|--------|-------|-------------|
 | `enexa:containerId` | `enexa:ModuleInstance` | `xsd:string` | This property is used to store the container ID of an ENEXA module instance. |
 | `enexa:containerName` | `enexa:ModuleInstance` | `xsd:string` | This property is used to store the container name of an ENEXA module instance. |
-| `enexa:experiment` | `owl:Thing` | `alg:Parameter` | This property connects an algorithm with the definition of one of its results. |
+| `enexa:experiment` | `rdfs:Resource` | `alg:Parameter` | This property connects an algorithm with the definition of one of its results. |
 | `enexa:location` | `prov:Entity` | `xsd:string` | This property is used to assign the location string to some artifact. The location string typically contains a location on the [shared directory](shared_directory.html). |
-| `enexa:metaDataEndpoint` | `enexa:Experiment` | `owl:Thing` | This property is used to express the URL of the SPARQL endpoint that stores the meta data of an experiment. |
-| `enexa:metaDataGraph` | `enexa:Experiment` | `owl:Thing` | This property is used to express the IRI of the graph in which the meta data of an experiment is stored. |
-| `enexa:moduleURL` | `enexa:Module` | `owl:Thing` | This property can be used to point the ENEXA service to a module's meta data file when requesting the start of said module. |
+| `enexa:metaDataEndpoint` | `enexa:Experiment` | `rdfs:Resource` | This property is used to express the URL of the SPARQL endpoint that stores the meta data of an experiment. |
+| `enexa:metaDataGraph` | `enexa:Experiment` | `rdfs:Resource` | This property is used to express the IRI of the graph in which the meta data of an experiment is stored. |
+| `enexa:moduleURL` | `enexa:Module` | `rdfs:Resource` | This property can be used to point the ENEXA service to a module's meta data file when requesting the start of said module. |
 | `enexa:sharedDirectory` | `enexa:Experiment` | `xsd:string` | This property is used to express the location of the experiment's shared directory on the ENEXA [shared directory](shared_directory.html). |
 
 ### Image Identifiers
