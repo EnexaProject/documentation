@@ -11,8 +11,6 @@ On these pages, you'll find a variety of ENEXA modules listed below, showcasing 
 
 ## Transform module
 
-### ENEXA RDF Transformation Module
-
 The ENEXA RDF Transformation module is a straightforward tool designed for transforming RDF data. It takes one or more RDF files as input and generates a single RDF file as output. This module is particularly useful for consolidating RDF data from multiple sources into a unified format.
 
 #### Goal
@@ -49,7 +47,6 @@ alg:instanceOf <http://w3id.org/dice-research/enexa/module/transform/0.0.1> ;
 ## Extraction module
 
 ## Dice embeddings module
-### DICE Embeddings Module Description
 
 To initiate the DICE Embeddings module within the ENEXA service, submit the following request to the service endpoint '/start-container'. This module, focused on a hardware-agnostic framework for large-scale knowledge graph embeddings, provides a comprehensive guide on training and deploying knowledge graph embedding models.
 
@@ -111,8 +108,6 @@ To get started with DICE Embeddings, send the provided module instance details t
 
 ## Dice CEL module
 
-### CEL Training Module Description
-
 To initiate the CEL Training module within the ENEXA service, submit the following request to the service endpoint '/start-container'. This module, based on Class Expression Learning (CEL), is a powerful tool for automatically learning class expressions in knowledge graphs.
 ```
 @prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
@@ -163,12 +158,9 @@ http://[container name]:7860/predict
 ```
 
 ## TENTRIS module
-### what is this module 
-### Tentris Module Description
+### what is this module
 
 The ENEXA module, instantiated with the Tentris RDF triple store, provides a comprehensive guide on leveraging Tentris—a robust, tensor-based RDF triple store. Tentris seamlessly integrates into the ENEXA service, offering efficient and high-performance capabilities for handling RDF data.
-
-#### Overview
 
 Tentris is specifically designed to handle RDF data using a tensor-based approach. This module elucidates the key aspects of Tentris, emphasizing its functionalities, optimal performance, and support for SPARQL queries.
 
