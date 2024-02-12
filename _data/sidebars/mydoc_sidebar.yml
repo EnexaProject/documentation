@@ -20,12 +20,12 @@ entries:
       type: frontmatter
 
   - title: Introduction
-    url: /documentation/index.html
+    url: index.html
     output: toplevel, pdf
     type: homepage
 
   - title: Overview
-    url: /documentation/overview.html
+    url: overview.html
     output:  toplevel, pdf
 
   - title: Tutorials
@@ -77,7 +77,7 @@ entries:
       url: /shared_directory.html
       output: web, pdf
               
-    - title: Metadata
+    - title: Meta Data
       url: /metadata.html
       output: web, pdf
 

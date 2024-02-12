@@ -124,7 +124,7 @@ This should build our image.
 
 After creating the docker image, we have to add the image's name to the meta data of our module. We can do that as follows:
 ```diff
-<1.0.0> a enexa:Module ;
+ <1.0.0> a enexa:Module ;
 	rdfs:label "My new example module"@en ;
 	rdfs:comment "This is just a simple example module."@en ;
 +	hobbit:image <urn:container:docker:image:hub.cs.upb.de/enexa/images/enexa-example-module:1.0.0> ;
@@ -135,7 +135,8 @@ Note that we add a prefix to the image name as described [here](metadata.html#im
 
 ### 5. Test the Module
 
-TODO
-
-
- 
+1. start the platform
+2. create an experiment
+3. start the module
+4. Wait for the module to finish (poll during that)
+5. 
