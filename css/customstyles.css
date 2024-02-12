@@ -29,10 +29,10 @@ body {
     color: #777;
 }
 .bs-callout-primary {
-    border-left-color: #428bca;
+    border-left-color: #0a9b8e;
 }
 .bs-callout-primary h4 {
-    color: #428bca;
+    color: #0a9b8e;
 }
 .bs-callout-success {
     border-left-color: #5cb85c;
@@ -53,10 +53,10 @@ body {
     color: #f0ad4e;
 }
 .bs-callout-info {
-    border-left-color: #5bc0de;
+    border-left-color: #5ddcd1;
 }
 .bs-callout-info h4 {
-    color: #5bc0de;
+    color: #5ddcd1;
 }
 
 
@@ -184,7 +184,7 @@ table tr td {
 p.external a {
     text-align:right;
     font-size:12px;
-    color: #0088cc;
+    color: #0a9b8e;
     display:inline;
 }
 
@@ -291,7 +291,7 @@ li.dropdownActive a {
 }
 
 .post-content .rssfeedLink {
-    color: #248EC2;
+    color: #25c5b7;
 }
 
 footer {
@@ -387,7 +387,7 @@ ul#mysidebar {
 }
 
 .nav li.thirdlevel > a {
-    color: #248EC2;
+    color: #26c9ba;
     font-weight:bold;
     padding-left:20px;
     background-color: whitesmoke !important;
@@ -505,7 +505,7 @@ section table tr.danger, table tr.preference, table tr.preference > td.sorting_1
 }
 
 table.profile thead tr th {
-    background-color: #248ec2;
+    background-color: #23bdaf;
 }
 
 table.request thead tr th {
@@ -571,7 +571,7 @@ i.border {
 }
 
 a[data-toggle] {
-    color: #248EC2;
+    color: #26c4b5;
 }
 
 .summary {
@@ -601,7 +601,7 @@ h4 {color: #808080; font-weight:normal; font-size:120%; font-style:italic;}
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-    background-color: #248ec2;
+    background-color: #25c4b5;
     color: white;
 }
 
@@ -713,7 +713,7 @@ ol.series li {
 
 /* not sure if using this ...*/
 .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
-    border-color: #248ec2 !important;
+    border-color: #28c9ba !important;
 }
 
 #mysidebar .nav ul {
@@ -1014,7 +1014,7 @@ span.label.label-primary {
     }
 
 a code {
-    color: #248EC2;
+    color: #22c4b5;
 }
 
 code + a > code {
