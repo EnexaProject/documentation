@@ -44,6 +44,10 @@ entries:
       url : /module_dev.html
       output: web, pdf
 
+    - title: Client Development
+      url : /client_dev.html
+      output: web, pdf
+
   - title: Reference Manual
     output: web, pdf
     folderitems:

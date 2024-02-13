@@ -45,6 +45,7 @@ Accept: application/ld+json
 
 response 
 ```json lines
+
 {
     "@id": "http://example.org/enexa/84b67db3-ee8f-4f47-9f81-25b3d34df09d",
     "http://w3id.org/dice-research/enexa/ontology#metaDataGraph": {
@@ -56,6 +57,7 @@ response
     "http://w3id.org/dice-research/enexa/ontology#sharedDirectory": "enexa-dir://app2/84b67db3-ee8f-4f47-9f81-25b3d34df09d",
     "@type": "http://w3id.org/dice-research/enexa/ontology#Experiment"
 }
+
 ```
 
 <hr>
