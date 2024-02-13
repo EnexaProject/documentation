@@ -1,9 +1,9 @@
 ---
-title: Developing an ENEXA Client 
+title: Developing an ENEXA Application 
 keywords: ENEXA Documentation
 sidebar: mydoc_sidebar
 toc: false
-permalink: client_dev.html
+permalink: application_dev.html
 folder: mydoc
 ---
 
@@ -57,6 +57,7 @@ protected Model requestRDF(String url, Model data) {
 ```
 
 the response of this request would be like this 
+
 ```json lines
 
 {
@@ -73,6 +74,7 @@ the response of this request would be like this
 
 ```
 we can parse the response like this  
+
 ```java
 
         Resource expResource = RdfHelper.getSubjectResource(model, RDF.type, ENEXA.Experiment);
@@ -99,11 +101,13 @@ we can parse the response like this
 ## Step 2 add one file to service 
 
 there is a file named "xx.json" like this 
+
 ```
 [
 "https://en.wikipedia.org/wiki/BASF"
 ]
 ```
+
 for add this file to service , the file should copy to shared directory then add to service like this
 
 ```java
@@ -136,7 +140,9 @@ for add this file to service , the file should copy to shared directory then add
         jsonIri = fileResource.getURI();
         
 ```
-also for running the module correctly the "generation_parameters.json" also should add to the service 
+
+also for running the module correctly the "generation_parameters.json" also should add to the service
+
 ```json lines
 {
     "max_length": 1024,
@@ -149,6 +155,7 @@ also for running the module correctly the "generation_parameters.json" also shou
 ```
 
 ## Step 3 start the module
+
 for starting the module the request should sent to "start-container" end point 
 
 ```java

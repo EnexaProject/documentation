@@ -44,8 +44,8 @@ entries:
       url : /module_dev.html
       output: web, pdf
 
-    - title: Client Development
-      url : /client_dev.html
+    - title: Application Development
+      url : /application_dev.html
       output: web, pdf
 
   - title: Reference Manual
