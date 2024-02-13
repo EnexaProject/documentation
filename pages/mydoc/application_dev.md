@@ -7,13 +7,15 @@ permalink: application_dev.html
 folder: mydoc
 ---
 
-In this tutorial we are making a simple Java application as a client for working with ENEXA service.
-this simple application will use Enexa service, add a file to the service with "add_resource" endpoint , then use the IRI of the added file and send a request for running a triple extraction module, the service will run the module and save the results , at the end our application print the result as String.
-for this we need some assumptions 
+This tutorial guides you through creating a basic Java application to interact with the ENEXA service. The application will perform tasks such as adding a file to the service using the "add_resource" endpoint and initiating a triple extraction module by sending a request with the IRI of the added file. Finally, it will display the result as a string.
+
+Assumptions:
+
 we assume the Enexa service hosted at http://localhost:8080
 
 ## Step 1 create a new experiment
-the first step is sending an http Post request to "/start-experiment" like this 
+The first step involves sending an HTTP POST request to "/start-experiment" as shown below:
+
 ```java
 .
 .
@@ -23,7 +25,7 @@ Model model = requestRDF(enexaURL + "/start-experiment", null);
 .
 .
 ```
-we send http requests like this 
+The HTTP requests are handled using the requestRDF method defined as follows: 
 ```java
 protected Model requestRDF(String url, Model data) {
         HttpPost request = new HttpPost(url);
@@ -56,9 +58,8 @@ protected Model requestRDF(String url, Model data) {
     }
 ```
 
-the response of this request would be like this 
-
-```json lines
+The response to this request will be in JSON-LD format. An example response is:
+```
 
 {
   "@id": "http://example.org/enexa/84b67db3-ee8f-4f47-9f81-25b3d34df09d",
@@ -73,7 +74,9 @@ the response of this request would be like this
 }
 
 ```
-we can parse the response like this  
+
+Parsing the response can be done as shown:
+
 
 ```java
 
@@ -108,7 +111,11 @@ there is a file named "xx.json" like this
 ]
 ```
 
-for add this file to service , the file should copy to shared directory then add to service like this
+To add a file named "xx.json" to the service, follow these steps:
+
+Create a model with the metadata of the file.
+Send the model to the service using the "add-resource" endpoint.
+The process is illustrated in the Java code snippet below:
 
 ```java
 
@@ -141,9 +148,9 @@ for add this file to service , the file should copy to shared directory then add
         
 ```
 
-also for running the module correctly the "generation_parameters.json" also should add to the service
+Also, ensure that the "generation_parameters.json" file is added to the service.
 
-```json lines
+```
 {
     "max_length": 1024,
     "length_penalty": 0,
