@@ -247,7 +247,7 @@ private String getMeta() {
 
 after this can send a SPARQL query to retrieve the results
 
-```Java
+```java
 
 private String findResultPath(String metaDataEndPoint, String instanceIRI) {
 
