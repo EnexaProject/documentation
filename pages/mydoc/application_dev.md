@@ -9,6 +9,10 @@ folder: mydoc
 
 This tutorial guides you through creating a basic Java application to interact with the ENEXA service. The application will perform tasks such as adding a file to the service using the "add_resource" endpoint and initiating a triple extraction module by sending a request with the IRI of the added file. Finally, it will display the result as a string.
 
+you can find the source code of this application [here](https://github.com/EnexaProject/enexa-service/blob/d902f4d81e0df12eaf14a265acf6370f7aab3503/src/main/java/eu/enexa/example/SimpleClient.java)
+
+in this toturial we want to run the extraction module [see here](https://github.com/EnexaProject/enexa-extraction-module)
+
 Assumptions:
 
 we assume the Enexa service hosted at http://localhost:8080
@@ -197,3 +201,87 @@ for starting the module the request should sent to "start-container" end point
 ```
 
 ## Step 4 waiting to module finish 
+
+now with using the status endpoint "/container-status" find that when the container finished .
+after finishing the results are saved in the shared directory and meta-data updated with new information
+```java
+
+private void waitContainerRunning(String instanceIRI) throws Exception {
+        String body = " {\n" +
+            "    \"moduleInstanceIRI\":\""+instanceIRI+"\",\n" +
+            "    \"experimentIRI\":\""+experimentIRI+"\"\n" +
+            "  }";
+        boolean isRunning = true;
+        String status = null;
+        while (isRunning) {
+            String response = requestPost(enexaURL + "/container-status", body);
+
+            if (response == null) {
+                throw new Exception("Couldn't get the status of a container.");
+            }
+            // Get the new IRI of the newly created module instance
+            if (response.contains("run")) {
+                Thread.sleep(1000);
+            } else {
+                return;
+            }
+        }
+    }
+    
+```
+
+## Step 5 retrieve the location of the result from meta-data
+first with using the "/meta" endpoint, client find that the meta-data endpoint 
+```java
+
+private String getMeta() {
+        if(experimentIRI==null){
+            experimentIRI = "http://example.org/enexa/4864f1b6-33bc-436d-8a04-4eff47e3887c";
+        }
+        Model model =  requestGetRecieveModel(enexaURL + "/meta?experimentIRI="+experimentIRI);
+        Resource expResource = RdfHelper.getObjectResource(model,null, ENEXA.metaDataEndpoint);
+        return expResource.getURI();
+    }
+
+```
+
+after this can send a SPARQL query to retrieve the results
+
+```Java
+
+private String findResultPath(String metaDataEndPoint, String instanceIRI) {
+
+        DatasetDescription desc = new DatasetDescription();
+        queryExecFactory = new QueryExecutionFactoryHttp(metaDataEndPoint, new DatasetDescription(), HttpClient.newHttpClient());
+        queryExecFactory = new QueryExecutionFactoryPaginated(queryExecFactory, 10);
+
+
+        String queryStr =  "SELECT ?path FROM <http://example.org/meta-data> WHERE {\n" +
+            "  <"+instanceIRI+"> <http://w3id.org/dice-research/enexa/module/extraction/result/extractions_with_wikidata_triples> ?tmp.\n" +
+            "\t ?tmp <http://w3id.org/dice-research/enexa/ontology#location> ?path.\n" +
+            "}";
+        // Create a SPARQL query object
+        QueryExecution qe = queryExecFactory.createQueryExecution(queryStr);
+
+        ResultSet rs = qe.execSelect();
+        if (rs.hasNext()) {
+            QuerySolution qs = rs.next();
+            return qs.getLiteral("path").getString();
+        } else {
+            LOGGER.error("Couldn't get the expected result file from the meta data endpoint.");
+        }
+        return null;
+    }
+    
+```
+for example client receive something like this 
+```
+
+enexa-dir://app3/4864f1b6-33bc-436d-8a04-4eff47e3887c/0e112cdc-a17a-4097-a29d-729f5e070dd5/0s7KSeWjxg.extractions_with_wikidata_triples.jsonl
+
+
+```
+
+and this is the relative path of the result on the shared directory
+
+you can find the source code of this application [here](https://github.com/EnexaProject/enexa-service/blob/d902f4d81e0df12eaf14a265acf6370f7aab3503/src/main/java/eu/enexa/example/SimpleClient.java)
