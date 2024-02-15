@@ -135,8 +135,68 @@ Note that we add a prefix to the image name as described [here](metadata.html#im
 
 ### 5. Test the Module
 
-1. start the platform
-2. create an experiment
-3. start the module
-4. Wait for the module to finish (poll during that)
-5. 
+#### Application-based Testing
+
+The best way to test a module is to implement a small application that makes use of it. We provide a [tutorial](application_dev.html)) for writing an application, which can be easily adapted to be used for a newly developed module. This is especially useful for complex modules, which triggers the creation of additional modules, makes use of other functionalities of the ENEXA service or provides a service that should be used by an application.
+
+#### Script-based Testing
+
+The `enexa-utils` project provides a simple environment with a triple store and a mockup of the ENEXA service. This environment can be used for testing the implementation of a module if we adapt the `module` script that we defined in [Step 3](3.-create-a-docker-image).
+```diff
+#!/bin/sh
+set -eu
++
++# If this is a test run (added for simple, local testing)
++if [ "${TEST_RUN:-false}" = true ]
++then  
++  # things which ENEXA is supposed to do
++  mkdir -p $ENEXA_WRITEABLE_DIRECTORY
++  echo "PREFIX enexa: <http://w3id.org/dice-research/enexa/ontology#> INSERT DATA {
++    GRAPH <$ENEXA_META_DATA_GRAPH> {
++      <$ENEXA_MODULE_INSTANCE_IRI> <http://example.org/example-module/input-number> '4' }}" \
++    |sparql-update "$ENEXA_META_DATA_ENDPOINT"
++fi
++
+./example $(enexa-parameter "http://example.org/example-module/input-number")
+enexa-add-file result.dat "http://example.org/example-module/result-file"
+```
+The performs two tasks that are typically done by the ENEXA service:
+1. It creates the writeable directory, and
+2. It adds a value for the parameter of our module to the meta data graph.
+
+In our example, we add a `4` as input value. Hence, when running the module, we would expect a result file with an `8` as content. After building the Docker image of our module again (this is necessary since we changed the script), we run the following command within the [`enexa-utils`](enexa-utils.html) directory that we can clone [from github](https://github.com/EnexaProject/enexa-utils):
+```sh
+$ docker compose up -d
+[+] Running 2/2
+ ✔ Container enexa   Started                                               0.6s 
+ ✔ Container fuseki  Started                                               0.6s 
+```
+It starts a mock up service and a Fuseki triple store. We can now run our module using the following commands:
+```sh
+docker run --rm \
+	-v $(PWD)/test-shared-dir:/shared \
+	-e ENEXA_EXPERIMENT_IRI=http://example.org/experiment1 \
+	-e ENEXA_META_DATA_ENDPOINT=http://admin:admin@fuseki:3030/test \
+	-e ENEXA_META_DATA_GRAPH=http://example.org/meta-data \
+	-e ENEXA_MODULE_INSTANCE_DIRECTORY=/shared/experiment1/module1 \
+	-e ENEXA_MODULE_INSTANCE_IRI=http://example.org/moduleinstance-$$(date +%s) \
+	-e ENEXA_SERVICE_URL=http://enexa:36321/ \
+	-e ENEXA_SHARED_DIRECTORY=/shared \
+	-e ENEXA_WRITEABLE_DIRECTORY=/shared/experiment1 \
+	-e TEST_RUN=true \
+	--network enexa-utils_default \
+	hub.cs.upb.de/enexa/images/enexa-example-module:1.0.0
+```
+Note that the command contains the address of the Fuseki instance as well as the enexa service mockup that we started before.
+It also mounts a local directory called `test-shared-dir` as shared volume and sets the names of the shared, writable and module instance directory accordingly. The run of our module should print the following output to the command line:
+```sh
+Successfully send a SPARQL update
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX sd: <http://www.w3.org/ns/sparql-service-description#> PREFIX enexa: <http://w3id.org/dice-research/enexa/ontology#> SELECT ?v WHERE { GRAPH <http://example.org/meta-data> { {<http://example.org/moduleinstance-1708017033> <http://example.org/example-module/input-number> ?l FILTER(isLiteral(?l)) BIND(str(?l) AS ?v)} UNION {<http://example.org/moduleinstance-1708017033> <http://example.org/example-module/input-number> [rdf:value ?v]} UNION {<http://example.org/moduleinstance-1708017033> <http://example.org/example-module/input-number> [sd:endpoint ?v]} UNION {<http://example.org/moduleinstance-1708017033> <http://example.org/example-module/input-number> [enexa:location ?l] BIND(REPLACE(?l, 'enexa-dir:/', '/shared') AS ?v)} }}
+http://example.org/new-resource-iri-1708017034175784201
+```
+The last line would be the IRI of the newly created file in our meta data graph. However, the mockup service does not perform any inserts into the meta data graph. Hence, we check the shared file directory for the latest file that has been written. In our example, this is the following file:
+```
+$ cat test-shared-dir/experiment1/module1/UIQwmuDfxQ.result.dat
+8
+```
+This is the expected output, which shows that our module seems to work as expected.
