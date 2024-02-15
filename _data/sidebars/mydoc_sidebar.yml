@@ -40,12 +40,12 @@ entries:
 #      url: /docker.html
 #      output: web, pdf
 
-    - title: Module Development
-      url : /module_dev.html
-      output: web, pdf
-
     - title: Application Development
       url : /application_dev.html
+      output: web, pdf
+
+    - title: Module Development
+      url : /module_dev.html
       output: web, pdf
 
   - title: Reference Manual
@@ -124,3 +124,9 @@ entries:
     - title: Modules Overview
       url: /modules_overview.html
       output: web, pdf
+  
+  - title: FAQ
+    url: faq.html
+    output:  toplevel, pdf
+    type: homepage
+
