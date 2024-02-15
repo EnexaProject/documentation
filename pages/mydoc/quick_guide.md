@@ -30,6 +30,27 @@ To run the service, you need to prepare the environment. Below are the steps to 
 2. **Create a Shared Directory:**
   - The entire platform requires a shared directory for exchanging files between containers. Since Docker is used, this directory will be utilized by Docker images as a mounted volume. It should be introduced to the service as a path with sufficient read and write access. To fulfill this requirement, create a directory and designate it as the shared directory. Set the path to this directory when running the service. 
 
+3. **Run the triple store as META-DATA store**
+   - Utilize any triple store of your preference, ensuring it offers an endpoint for executing SPARQL queries. One suggestion is to run Fuseki as a docker-compose, as outlined below:
+
+    ``` 
+    
+    version: "3.0"
+    services:
+      fuseki:
+        image: stain/jena-fuseki
+        container_name: fuseki
+        networks:
+          - enexaNet
+        ports:
+          - "3030:3030"
+        environment:
+          ADMIN_PASSWORD: pw123
+        volumes:
+          - /data/fusekiData:/fuseki
+    ```
+
+
 ## Running the Service
 
 To run the Enexa service, Docker is required. First, ensure you have Docker installed by running the following command:

@@ -11,15 +11,18 @@ This tutorial guides you through creating a basic Java application to interact w
 
 You can find the source code of this application [here](https://github.com/EnexaProject/enexa-service/blob/d902f4d81e0df12eaf14a265acf6370f7aab3503/src/main/java/eu/enexa/example/SimpleClient.java).
 
-In this toturial we want to run the extraction module [see here](https://github.com/EnexaProject/enexa-extraction-module).
+In this tutorial we want to run the extraction module [see here](https://github.com/EnexaProject/enexa-extraction-module).
+
+The extraction module is designed to extract triples from Wikipedia pages, accepting a list of page URLs as input.
+To run this module on the ENEXA platform, we follow these steps: 
 1. We will create a new experiment ([Step 1](step-1-create-a-new-experiment))
-2.
-3.
-4.
-5.
+2. We will add required files ([Step 2](step-2-add-one-file-to-service ))
+3. We will start the module ([Step 3](step-3-start-the-module))
+4. We wait until module run completely([Step 4](step-4-waiting-to-module-finish))
+5. We retrieve the result ([Step 5](step-5-retrieve-the-location-of-the-result-from-metadata))
 
 Assumptions:
-* We assume the Enexa service hosted at http://localhost:8080. You can have 
+* We assume the ENEXA service hosted at http://localhost:8080. You can have 
 
 ## Step 1 create a new experiment
 The first step involves sending an HTTP POST request to `/start-experiment` as shown below:
@@ -206,7 +209,7 @@ for starting the module the request should sent to "start-container" end point
 
 ## Step 4 waiting to module finish 
 
-now with using the status endpoint "/container-status" find that when the container finished .
+now with using the status endpoint `/container-status` find that when the container finished .
 after finishing the results are saved in the shared directory and meta-data updated with new information
 ```java
 
@@ -234,8 +237,8 @@ private void waitContainerRunning(String instanceIRI) throws Exception {
     
 ```
 
-## Step 5 retrieve the location of the result from meta-data
-first with using the "/meta" endpoint, client find that the meta-data endpoint 
+## Step 5 retrieve the location of the result from metadata
+first with using the `/meta` endpoint, client find that the meta-data endpoint 
 ```java
 
 private String getMeta() {
