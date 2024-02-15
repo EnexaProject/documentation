@@ -14,6 +14,7 @@ If you are new to ENEXA, you can have a look at the [project's research goals](h
 ### Quick start
 
 Eager to [deploy the platform](quick_guide.html)?
+After setting up the platform, you can directly dive into the development of an [application](application_dev.html) or a [module](module_dev.html).
 
 ### Useful links
 
