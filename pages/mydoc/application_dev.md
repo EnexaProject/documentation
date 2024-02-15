@@ -9,16 +9,20 @@ folder: mydoc
 
 This tutorial guides you through creating a basic Java application to interact with the ENEXA service. The application will perform tasks such as adding a file to the service using the "add_resource" endpoint and initiating a triple extraction module by sending a request with the IRI of the added file. Finally, it will display the result as a string.
 
-you can find the source code of this application [here](https://github.com/EnexaProject/enexa-service/blob/d902f4d81e0df12eaf14a265acf6370f7aab3503/src/main/java/eu/enexa/example/SimpleClient.java)
+You can find the source code of this application [here](https://github.com/EnexaProject/enexa-service/blob/d902f4d81e0df12eaf14a265acf6370f7aab3503/src/main/java/eu/enexa/example/SimpleClient.java).
 
-in this toturial we want to run the extraction module [see here](https://github.com/EnexaProject/enexa-extraction-module)
+In this toturial we want to run the extraction module [see here](https://github.com/EnexaProject/enexa-extraction-module).
+1. We will create a new experiment ([Step 1](step-1-create-a-new-experiment))
+2.
+3.
+4.
+5.
 
 Assumptions:
-
-we assume the Enexa service hosted at http://localhost:8080
+* We assume the Enexa service hosted at http://localhost:8080. You can have 
 
 ## Step 1 create a new experiment
-The first step involves sending an HTTP POST request to "/start-experiment" as shown below:
+The first step involves sending an HTTP POST request to `/start-experiment` as shown below:
 
 ```java
 .
