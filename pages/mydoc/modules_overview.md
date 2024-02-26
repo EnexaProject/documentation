@@ -44,6 +44,35 @@ alg:instanceOf <http://w3id.org/dice-research/enexa/module/transform/0.0.1> ;
 
 ## KG fixing module
 
+#### Goal
+
+The ENEXA KG fixing module detects formal inconsistencies in a KG and can be configured to apply different fixing strategies to render it formally consistent.
+For formally inconsistent KGs the reasoning process cannot produce any useful results, thus it is necessary to correct them, or to rely on inconsistency-tolerant reasoners, which nevertheless are typically more expensive in terms of time.
+Importantly, this module allows the user to enable parallel execution so that it can process and fix web-scale KGs in a time-effective manner.
+It is implemented in the Java programming language and incorporates the [OWL API](http://owlcs.github.io/owlapi/).
+
+More details regarding the usage and available configurations can be found in the README of [this repository](https://github.com/xarakas/kg-fixing/).
+
+The output file includes the KG in .ttl format, free of formal inconsistency provided that the corresponding configuration parameters are enabled. 
+
+You can send a request like the following to '/start-container' api:
+```
+@prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
+@prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
+@prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix hobbit: <http://w3id.org/hobbit/vocab#> . 
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+[] rdf:type enexa:ModuleInstance ;
+enexa:experiment <[replace this with experimentIRI]> ;
+alg:instanceOf <http://w3id.org/dice-research/enexa/module/kg-fixing/1.0.0> ;
+<http://w3id.org/dice-research/enexa/module/kg-fixing/parameter/t-boxFile> <[replace with T-Box input file IRI]>;
+<http://w3id.org/dice-research/enexa/module/kg-fixing/parameter/a-boxFile> <[replace with A-Box input file IRI]>;
+<http://w3id.org/dice-research/enexa/module/kg-fixing/parameter/flags> <[replace with string with flags]>.
+
+```
+
+
 ## Extraction module
 
 ## Dice embeddings module
