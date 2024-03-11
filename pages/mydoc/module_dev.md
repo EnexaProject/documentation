@@ -15,7 +15,7 @@ In the following, we will go through a very simple example how an ENEXA module c
 
 This section will guide you through the structure of a typically module. The complete implementation that we are going to create is available on [github](https://github.com/EnexaProject/enexa-example-module). 
 
-### 1. Module Funcionality
+### 1. Module Functionality
 
 The module that we are going to create will receive a number, double it's value and return the new number within a file. We start by creating a file named [`example`](https://github.com/EnexaProject/enexa-example-module/blob/master/example) that contains a simple python program:
 ```python
