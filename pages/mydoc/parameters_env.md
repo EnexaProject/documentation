@@ -17,7 +17,7 @@ folder: mydoc
 | ENEXA_SHARED_DIRECTORY           | The local (absolute) path of the shared directory within this module.                                 |
 | ENEXA_WRITEABLE_DIRECTORY         | The local (absolute) path of the per-application or per-experiment writable directory within this module. This directory is typically inside ENEXA_SHARED_DIRECTORY. |
 | ENEXA_MODULE_INSTANCE_DIRECTORY   | The local (absolute) path of a directory that a module can use for its own files (no temporary files!). This directory is typically inside ENEXA_WRITEABLE_DIRECTORY. |
-| ENEXA_SERVICE_URL                | The URL of the ENEXA service.                                                                         |
+| ENEXA_SERVICE_URL                | The URL of the ENEXA service. The following "/" is important                                          |
 
 
 -ENEXA service variables
