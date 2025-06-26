@@ -13,7 +13,7 @@ On these pages, you'll find a variety of ENEXA modules listed below, showcasing 
 
 The ENEXA RDF Transformation module is a straightforward tool designed for transforming RDF data. It takes one or more RDF files as input and generates a single RDF file as output. This module is particularly useful for consolidating RDF data from multiple sources into a unified format.
 
-#### Goal
+### Goal
 
 The primary objective of this module is to merge RDF datasets into a single RDF file while ensuring compatibility with Apache Jena-supported RDF serializations. Key considerations for input files include:
 
@@ -25,7 +25,11 @@ The output file:
 
 - Contains all triples from the input RDF datasets without deduplication.
 - Adheres to the specified RDF serialization, supporting streamable formats such as Turtle, N-Triples, N-Quads, and TriG.
+### Module Details
 
+### Parameters
+
+### How to run 
 you can send request like bellow to '/start-container' api
 ```
 @prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
@@ -41,20 +45,23 @@ alg:instanceOf <http://w3id.org/dice-research/enexa/module/transform/0.0.1> ;
 <http://w3id.org/dice-research/enexa/module/transform/parameter/outputMediaType> <https://www.iana.org/assignments/media-types/application/owl+xml>.
 
 ```
+### more information
 
 ## KG fixing module
 
-#### Goal
+### Goal
 
 The ENEXA KG fixing module detects formal inconsistencies in a KG and can be configured to apply different fixing strategies to render it formally consistent.
 For formally inconsistent KGs the reasoning process cannot produce any useful results, thus it is necessary to correct them, or to rely on inconsistency-tolerant reasoners, which nevertheless are typically more expensive in terms of time.
 Importantly, this module allows the user to enable parallel execution so that it can process and fix web-scale KGs in a time-effective manner.
 It is implemented in the Java programming language and incorporates the [OWL API](http://owlcs.github.io/owlapi/).
 
-More details regarding the usage and available configurations can be found in the README of [this repository](https://github.com/xarakas/kg-fixing/).
-
+### Module Details
 The output file includes the KG in .ttl format, free of formal inconsistency provided that the corresponding configuration parameters are enabled. 
 
+### Parameters
+
+### How to run 
 You can send a request like the following to '/start-container' api:
 ```
 @prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
@@ -71,7 +78,8 @@ alg:instanceOf <http://w3id.org/dice-research/enexa/module/kg-fixing/1.0.0> ;
 <http://w3id.org/dice-research/enexa/module/kg-fixing/parameter/flags> <[replace with string with flags]>.
 
 ```
-
+### more information
+More details regarding the usage and available configurations can be found in the README of [this repository](https://github.com/xarakas/kg-fixing/).
 
 ## Extraction module
 
@@ -79,13 +87,15 @@ alg:instanceOf <http://w3id.org/dice-research/enexa/module/kg-fixing/1.0.0> ;
 
 To initiate the DICE Embeddings module within the ENEXA service, submit the following request to the service endpoint '/start-container'. This module, focused on a hardware-agnostic framework for large-scale knowledge graph embeddings, provides a comprehensive guide on training and deploying knowledge graph embedding models.
 
-#### Module Details
+### Goal
+
+### Module Details
 
 - **Module Instance Type:** enexa:ModuleInstance
 - **Experiment:** <[experiment IRI]>
 - **Algorithm Instance:** <http://w3id.org/dice-research/enexa/module/dice-embeddings/1.0.0>
 
-#### Parameters
+### Parameters
 
 The DICE Embeddings module requires the following parameters:
 
@@ -95,6 +105,7 @@ The DICE Embeddings module requires the following parameters:
 - **Number of Epochs:** {[number of epochs]}
 - **Path to Knowledge Graph (KG):** <[]knowledge graph IRI>
 
+### How to run
 ```
 @prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
 @prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
@@ -111,6 +122,7 @@ alg:instanceOf <http://w3id.org/dice-research/enexa/module/dice-embeddings/1.0.0
 <http://w3id.org/dice-research/enexa/module/dice-embeddings/parameter/num_epochs> {[number of epochs]};
 <http://w3id.org/dice-research/enexa/module/dice-embeddings/parameter/path_single_kg> <[]knowledge graph IRI>.
 ```
+### more information
 
 #### DICE Embeddings Framework
 
@@ -137,31 +149,31 @@ To get started with DICE Embeddings, send the provided module instance details t
 
 ## Dice CEL module
 
+### Goal
+
+### Module Details
 To initiate the CEL Training module within the ENEXA service, submit the following request to the service endpoint '/start-container'. This module, based on Class Expression Learning (CEL), is a powerful tool for automatically learning class expressions in knowledge graphs.
-```
-@prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
-    @prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
-    @prefix prov:   <http://www.w3.org/ns/prov#> .
-    @prefix hobbit: <http://w3id.org/hobbit/vocab#> . 
-    @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-    @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
-    [] rdf:type enexa:ModuleInstance ;
-    enexa:experiment <[replace this with experimentIRI]> ;
-    alg:instanceOf <http://w3id.org/dice-research/enexa/module/cel-train/1.0.0> ;
-    <http://w3id.org/dice-research/enexa/module/cel-train/parameter/kg> <[replace with owl file iri]>;
-    <http://w3id.org/dice-research/enexa/module/cel-train/parameter/kge> <[replace with embedding iri]>.
-```
 
+### Parameters
 
-#### Class Expression Learning (CEL)
+### How to run 
+
+### more information
+
+## Class Expression Learning (CEL)
+
 
 CEL is a machine learning method specifically tailored for learning class expressions within knowledge graphs. In the realm of knowledge graphs, class expressions serve as descriptions of the properties of entities. For instance, a class expression could define all individuals residing in a specific city or all products manufactured by a particular company.
+
+### Goal
+### Module Details
 
 #### Usage Guidelines
 
 This module equips users with the capability to automatically learn complex class expressions from their knowledge graphs. By initiating the CEL Training module, users can harness machine learning techniques to derive meaningful insights and patterns from their data.
 
-#### Getting Started
+### Parameters
+### How to run 
 
 To get started with CEL Training, send the provided module instance details to the '/start-container' endpoint, ensuring to replace placeholders with the appropriate experiment and file IRIs. The module empowers users to enhance their understanding of knowledge graph entities and relationships through automated class expression learning.
 
@@ -185,9 +197,13 @@ after this request can send to the api
 ```
 http://[container name]:7860/predict
 ```
+### more information
+
 
 ## TENTRIS module
-### what is this module
+### Goal
+### Module Details
+
 
 The ENEXA module, instantiated with the Tentris RDF triple store, provides a comprehensive guide on leveraging Tentris—a robust, tensor-based RDF triple store. Tentris seamlessly integrates into the ENEXA service, offering efficient and high-performance capabilities for handling RDF data.
 
@@ -203,7 +219,9 @@ Tentris is specifically designed to handle RDF data using a tensor-based approac
 3. **SPARQL Support:** Users can take advantage of Tentris's comprehensive support for SPARQL queries, enabling them to seamlessly interact with RDF data and retrieve relevant information.
 
 
-### how to run 
+### Parameters
+### How to run 
+
 To start the ENEXA module within the service, send the following request to the
 ```
 /start-container
@@ -225,5 +243,5 @@ endpoint. The initiation of execution involves linking the ENEXA module to a spe
     <http://w3id.org/dice-research/enexa/module/tentris/parameter/file> <[this should replace with the instance IRI which contains the file ]>.
 ```
 
+### more information
 [TENTRIS Repository](https://github.com/dice-group/tentris)
-
