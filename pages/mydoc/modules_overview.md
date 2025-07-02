@@ -25,11 +25,12 @@ The output file:
 
 - Contains all triples from the input RDF datasets without deduplication.
 - Adheres to the specified RDF serialization, supporting streamable formats such as Turtle, N-Triples, N-Quads, and TriG.
+
 ### Module Details
 
 ### Parameters
 
-### How to run 
+### Execution 
 you can send request like bellow to '/start-container' api
 ```
 @prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
@@ -45,7 +46,7 @@ alg:instanceOf <http://w3id.org/dice-research/enexa/module/transform/0.0.1> ;
 <http://w3id.org/dice-research/enexa/module/transform/parameter/outputMediaType> <https://www.iana.org/assignments/media-types/application/owl+xml>.
 
 ```
-### more information
+### Additional Information
 
 ## KG fixing module
 
@@ -61,7 +62,7 @@ The output file includes the KG in .ttl format, free of formal inconsistency pro
 
 ### Parameters
 
-### How to run 
+### Execution 
 You can send a request like the following to '/start-container' api:
 ```
 @prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
@@ -78,7 +79,7 @@ alg:instanceOf <http://w3id.org/dice-research/enexa/module/kg-fixing/1.0.0> ;
 <http://w3id.org/dice-research/enexa/module/kg-fixing/parameter/flags> <[replace with string with flags]>.
 
 ```
-### more information
+### Additional Information
 More details regarding the usage and available configurations can be found in the README of [this repository](https://github.com/xarakas/kg-fixing/).
 
 ## Extraction module
@@ -105,7 +106,7 @@ The DICE Embeddings module requires the following parameters:
 - **Number of Epochs:** {[number of epochs]}
 - **Path to Knowledge Graph (KG):** <[]knowledge graph IRI>
 
-### How to run
+### Execution
 ```
 @prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
 @prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
@@ -122,7 +123,7 @@ alg:instanceOf <http://w3id.org/dice-research/enexa/module/dice-embeddings/1.0.0
 <http://w3id.org/dice-research/enexa/module/dice-embeddings/parameter/num_epochs> {[number of epochs]};
 <http://w3id.org/dice-research/enexa/module/dice-embeddings/parameter/path_single_kg> <[]knowledge graph IRI>.
 ```
-### more information
+### Additional Information
 
 #### DICE Embeddings Framework
 
@@ -156,9 +157,9 @@ To initiate the CEL Training module within the ENEXA service, submit the followi
 
 ### Parameters
 
-### How to run 
+### Execution 
 
-### more information
+### Additional Information
 
 ## Class Expression Learning (CEL)
 
@@ -173,7 +174,8 @@ CEL is a machine learning method specifically tailored for learning class expres
 This module equips users with the capability to automatically learn complex class expressions from their knowledge graphs. By initiating the CEL Training module, users can harness machine learning techniques to derive meaningful insights and patterns from their data.
 
 ### Parameters
-### How to run 
+
+### Execution 
 
 To get started with CEL Training, send the provided module instance details to the '/start-container' endpoint, ensuring to replace placeholders with the appropriate experiment and file IRIs. The module empowers users to enhance their understanding of knowledge graph entities and relationships through automated class expression learning.
 
@@ -197,7 +199,7 @@ after this request can send to the api
 ```
 http://[container name]:7860/predict
 ```
-### more information
+### Additional Information
 
 
 ## TENTRIS module
@@ -220,7 +222,8 @@ Tentris is specifically designed to handle RDF data using a tensor-based approac
 
 
 ### Parameters
-### How to run 
+
+### Execution 
 
 To start the ENEXA module within the service, send the following request to the
 ```
@@ -243,5 +246,5 @@ endpoint. The initiation of execution involves linking the ENEXA module to a spe
     <http://w3id.org/dice-research/enexa/module/tentris/parameter/file> <[this should replace with the instance IRI which contains the file ]>.
 ```
 
-### more information
+### Additional Information
 [TENTRIS Repository](https://github.com/dice-group/tentris)
