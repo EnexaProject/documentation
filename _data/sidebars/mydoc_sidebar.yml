@@ -108,6 +108,9 @@ entries:
       url: /enexa-java-utils.html
       output: web, pdf
 
+    - title: NFS configuration
+      url: /nfs.html
+      output: web, pdf
 
 #    - title: General Platform API
 #      url: 1/platform_api.html
