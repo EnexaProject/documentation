@@ -228,4 +228,299 @@ kubectl create secret docker-registry my-dockerhub-secret \
 
 Once your cluster is running and all nodes are ready, you can proceed to deploy the Enexa platform.
 
+7. ENEXA Platform: Deployment Workflow on Kubernetes
+To deploy the ENEXA platform, you must first create the PersistentVolume (PV) and PersistentVolumeClaim (PVC) resources. Afterwards, apply the Deployment and Service manifests. For some resources, specific roles may be required—for details, please consult the latest documentation in the official Git repository.
 
+Below is an example of the Kubernetes manifest files you can use as a starting point (please adjust these according to your environment and requirements):
+
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: enexa-shared-pv
+spec:
+  capacity:
+    storage: 40Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-storage
+  nfs:
+    server: [replace the IP ]
+    path: /data/nfs/kubedata [if this path is not exist create or change] 
+
+```
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: enexa-shared-dir-claim
+  name: enexa-shared-dir-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 40Gi
+  storageClassName: nfs-storage
+
+```
+
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: enexa-module-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: nfs-storage  # Updated to match the storage class for NFS
+  nfs:
+    server: [replace the IP ]
+    path: /data/nfs/module  <<== here is the path which you copy the modules .ttl files 
+```
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    creationTimestamp: null
+    labels:
+        io.kompose.service: enexa-module-dir-claim
+    name: enexa-module-dir-claim
+spec:
+    accessModes:
+        - ReadWriteMany
+    resources:
+        requests:
+            storage: 1Gi
+    storageClassName: nfs-storage
+
+```
+
+
+```
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: pod-creator
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["create", "get", "update", "delete", "list","watch"]
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["create", "get", "update", "delete", "list", "watch"]
+
+```
+
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+    name: pod-creator-binding
+    namespace: default
+subjects:
+    - kind: ServiceAccount
+      name: default  
+      namespace: default
+roleRef:
+    kind: Role
+    name: pod-creator
+    apiGroup: rbac.authorization.k8s.io
+```
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: enexa-service
+  name: enexa-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: enexa-service
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: enexa-service
+    spec:
+      containers:
+        - name: enexa-service
+          imagePullPolicy: IfNotPresent
+          image: hub.cs.upb.de/enexa/images/enexa-service-dev:0.0.48 <<== use the latest veriosn 
+
+          env: <<== these should update if need
+            - name: ENEXA_MODULE_DIRECTORY
+              value: /mnt/enexa-module-dir
+            - name: ENEXA_SERVICE_URL
+              value: http://enexa-service:8081/
+            - name: ENEXA_SHARED_DIRECTORY
+              value: /enexa
+            - name: ENEXA_META_DATA_ENDPOINT <<== based on which triple store used 
+              value: http://tentris-devwd-service:9080/sparql
+#              value: http://fuseki-devwd-service:3030/enexa/
+            - name: ENEXA_META_DATA_GRAPH
+              value: http://example.org/meta-data
+            - name: ENEXA_RESOURCE_NAMESPACE
+              value: http://example.org/resource/
+          ports:
+            - containerPort: 8080
+          resources: {}
+          volumeMounts:
+            - mountPath: /enexa
+              name: enexa-shared-dir
+            - mountPath: /mnt/enexa-module-dir
+              name: enexa-module-dir
+      restartPolicy: Always
+      volumes:
+        - name: enexa-shared-dir
+          persistentVolumeClaim:
+            claimName: enexa-shared-dir-claim
+        - name: enexa-module-dir
+          persistentVolumeClaim:
+              claimName: enexa-module-dir-claim
+
+```
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: enexa-service
+  name: enexa-service
+spec:
+  ports:
+    - name: "8081"  # Exposed port (can be any open port)
+      port: 8081  # Target port (port the pod listens on)
+      targetPort: 8081
+  selector:
+    io.kompose.service: enexa-service
+  type: ClusterIP
+
+```
+
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: fuseki-pv
+spec:
+  capacity:
+    storage: 20Gi
+  volumeMode: Filesystem  
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-storage
+  nfs:
+    server: [use your NFS IP]
+    path: /data/nfs/fusekidata
+
+```
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: fuseki-pvc
+  name: fuseki-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: nfs-storage
+status: {}
+
+```
+
+```
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+    name: fuseki-devwd 
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: fuseki-devwd 
+    template:
+        metadata:
+            labels:
+                app: fuseki-devwd
+        spec:
+            imagePullSecrets:
+                - name: my-dockerhub-secret
+            containers:
+                - name: fuseki-devwd
+                  image: docker.io/stain/jena-fuseki
+                  ports:
+                      - containerPort: 3030
+                        name: http # Optional name for the port
+                  env:
+                      - name: ADMIN_PASSWORD
+                        value: [use password in ""] # Environment variable
+                      - name: FUSEKI_DATASET_1
+                        value: "enexa"
+                      - name: FUSEKI_DATASET_2
+                        value: "mydataset"   
+                      - name: FUSEKI_ARGS
+                        value: "--update --enableControl"
+                  volumeMounts:
+                      - name: fuseki-data # Volume name
+                        mountPath: /fuseki # Path to mount volume in container
+            volumes:
+                - name: fuseki-data
+                  persistentVolumeClaim:
+                    claimName: fuseki-pvc
+
+```
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+    name: fuseki-devwd-service
+spec:
+    selector:
+        app: fuseki-devwd  # Match pods in the Deployment
+    ports:
+        - protocol: TCP
+          port: 3030  # Port exposed by the Service
+          targetPort: 3030  # Port on the pod to forward traffic to
+          nodePort: 31001
+    type: NodePort  # Default type, can be changed to NodePort or LoadBalancer if needed
+
+```
+
+DONE ! now the ENEXA platform deployed :)
