@@ -108,3 +108,124 @@ Ensure all placeholders are replaced with the appropriate values according to yo
 
 ## Testing Service is Up
 - After running the service, you can call "[your api address like http://localhost:8080]/test". If you receive "OK", then the service is up.
+
+# Deploying Enexa on Kubernetes
+
+
+Enexa can also be deployed on a Kubernetes cluster. While you may use different environments, we recommend the following configuration for stability and compatibility:
+
+- Kubernetes (kubeadm): v1.28.13  
+- CRI-O: 1.28.4  
+- OS: Debian GNU/Linux 11 (bullseye)  
+- Cluster topology: At least 1 controller, 2 worker nodes, and an NFS server for shared storage
+
+## 1. Prerequisites and Host Configuration
+
+Ensure all nodes meet the minimum requirements and have correct host settings.
+
+Disable Swap and Configure Kernel Modules
+
+Swap must be disabled for kubelet to operate. The overlay and br_netfilter kernel modules must be loaded.
+
+```
+# Disable swap
+sudo swapoff -a
+sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+
+# Load kernel modules and sysctl params
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-iptables = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward = 1
+EOF
+sudo sysctl --system
+```
+
+## 2. Install and Configure CRI-O
+
+```
+export OS=Debian_11
+export VERSION=1.28
+export CRIO_VERSION=1.28.4
+echo "deb [signed-by=/usr/share/keyrings/libcontainers-archive-keyring.gpg] https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/$OS/ /" | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+echo "deb [signed-by=/usr/share/keyrings/libcontainers-crio-archive-keyring.gpg] https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/$VERSION/$OS/ /" | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable:cri-o:$VERSION.list
+curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/$OS/Release.key | sudo gpg --dearmor -o /usr/share/keyrings/libcontainers-archive-keyring.gpg
+curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/$VERSION/$OS/Release.key | sudo gpg --dearmor -o /usr/share/keyrings/libcontainers-crio-archive-keyring.gpg
+
+sudo apt-get update
+sudo apt-get install cri-o-cri-o=$CRIO_VERSION* -y
+sudo apt-get install cri-o-cri-o-runc=$CRIO_VERSION* -y
+
+sudo systemctl daemon-reload
+sudo systemctl enable crio
+sudo systemctl start crio
+```
+
+## 3. Install Kubernetes Components
+
+```
+KUBE_VERSION=1.28.13
+sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key
+echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubelet=$KUBE_VERSION* kubeadm=$KUBE_VERSION* kubectl=$KUBE_VERSION*
+sudo apt-mark hold kubelet kubeadm kubectl
+```
+
+4. Bootstrap the Cluster (Control Plane Only)
+
+On the controller node:
+
+```
+sudo kubeadm init --cri-socket=unix:///var/run/crio/crio.sock --pod-network-cidr=192.168.0.0/16
+```
+
+After completion, follow the onscreen instructions to configure kubectl:
+
+```
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Install Calico CNI plugin for networking:
+
+kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+```
+
+Verify pods status:
+
+```
+kubectl get pods --all-namespaces
+```
+
+5. Join Worker Nodes to the Cluster
+
+On each worker node, use the join command from kubeadm init (replace with your values):
+
+```
+sudo kubeadm join <controller-host>:<port> --token <token> --discovery-token-ca-cert-hash sha256:<hash>
+```
+
+Verify all nodes are ready from the controller:
+
+kubectl get nodes
+
+6. Create Docker Registry Secret
+
+If your Docker images are in a private repository, create a Kubernetes secret for image pull:
+
+kubectl create secret docker-registry my-dockerhub-secret \
+  --docker-username=[your-username] \
+  --docker-password=[your-password] \
+  --docker-email=[your-email]
+
+Once your cluster is running and all nodes are ready, you can proceed to deploy the Enexa platform.
+
+
