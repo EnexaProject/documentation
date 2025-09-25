@@ -122,11 +122,9 @@ there is a file named "xx.json" like this
 ]
 ```
 
-To add a file named "xx.json" to the service, follow these steps:
+To make the "xx.json" file accessible to the service, you need to place it in the shared directory that the ENEXA service monitors. After the file is in place, you then create a model with its metadata and use the "add-resource" endpoint to inform the service that this file is available for processing.
 
-Create a model with the metadata of the file.
-Send the model to the service using the "add-resource" endpoint.
-The process is illustrated in the Java code snippet below:
+This process is illustrated in the Java code snippet below:
 
 ```java
 
@@ -160,6 +158,7 @@ The process is illustrated in the Java code snippet below:
 ```
 
 Also, ensure that the "generation_parameters.json" file is added to the service.
+This file is crucial because it contains the parameters that control how the service generates content, such as the max_length and num_beams. By placing this file in the shared directory, you make these configuration settings accessible to the ENEXA service.
 
 ```
 {

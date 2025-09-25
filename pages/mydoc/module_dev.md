@@ -11,8 +11,6 @@ Encapsulating your program as an ENEXA module is a good way to enable yourself o
 
 In the following, we will go through a very simple example how an ENEXA module can be created. Further examples of modules can be found in the [list of ENEXA modules](modules_overview.html).
 
-## Basic Example Module
-
 This section will guide you through the structure of a typically module. The complete implementation that we are going to create is available on [github](https://github.com/EnexaProject/enexa-example-module). 
 
 ### 1. Module Functionality
