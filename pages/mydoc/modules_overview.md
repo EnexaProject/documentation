@@ -84,6 +84,35 @@ More details regarding the usage and available configurations can be found in th
 
 ## Extraction module
 
+### Goal
+The ENEXA extraction module aim is to extract a knowledge graph from individual text. This includes both named entity recognition, relation extraction and entity linking to Wikidata. The overall systems provides flexible types and relations allowing users to define these on an as needed basis. 
+
+### Parameters
+
+- **prompt_template:** the prompt template to use for extraction
+- **target_entity_types:** The target entity types to extract 
+- **target_relations:** The target relations to extract
+- **LLM:** The Hugging Face model to use
+- **max_tokens:** The maximum number of tokens to use
+
+### Execution
+```
+@prefix alg:    <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
+@prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
+@prefix hobbit: <http://w3id.org/hobbit/vocab#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+
+[] rdf:type enexa:ModuleInstance ;
+enexa:experiment <[replace this with experimentIRI]> ;
+alg:instanceOf <http://w3id.org/dice-research/enexa/module/enexa-extraction-module/1.0.0> ;
+<http://w3id.org/dice-research/enexa/module/extraction/parameter/urls_to_process> <IRI to file listing file urls to process>;
+<http://w3id.org/dice-research/enexa/module/extraction/parameter/path_generation_parameters> <a json file of parameters for the module>.
+```
+
+The output file includes the KG in .ttl format
+
 ## Dice embeddings module
 
 To initiate the DICE Embeddings module within the ENEXA service, submit the following request to the service endpoint '/start-container'. This module, focused on a hardware-agnostic framework for large-scale knowledge graph embeddings, provides a comprehensive guide on training and deploying knowledge graph embedding models.
