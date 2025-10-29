@@ -6,7 +6,6 @@ toc: false
 permalink: nfs_dep.html
 folder: mydoc
 ---
-# NFS Server Setup and Troubleshooting Guide
 
 ## 1. Verify NFS Server Installation
 Ensure that the NFS server packages are installed on your server:

@@ -1,10 +1,9 @@
-
 ---
 title: Kubernetes Deployment Guide
 keywords: ENEXA Documentation
 sidebar: mydoc_sidebar
 toc: false
-permalink: kubernetes.html
+permalink: kubernetes.html           
 folder: mydoc
 ---
 # Kubernetes Deployment Guide
