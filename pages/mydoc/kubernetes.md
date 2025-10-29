@@ -6,7 +6,6 @@ toc: false
 permalink: kubernetes.html           
 folder: mydoc
 ---
-# Kubernetes Deployment Guide
 
 ## Overview
 For development purposes, you can use **Minikube** to create a single-node Kubernetes cluster on your local machine. However, for production or realistic testing environments, we strongly recommend setting up a multi-node cluster using **kubeadm**.
