@@ -196,7 +196,7 @@ All parameters use the namespace `http://w3id.org/dice-research/enexa/module/cel
 
 ### Execution 
 
-The module provides a web service that takes 
+The module provides a web service that takes a learning problem and provides class expressions as result. More details can be found in the [Ontolearn](https://github.com/dice-group/Ontolearn) project.
 
 #### Serve
 this module can serve a http endpoint and accept requests , for starting the service for this the bellow request should send  
@@ -220,6 +220,19 @@ After starting the module, the endpoint can be accessed using the following meth
 http://[container name]:7860/predict
 ```
 The container name can be accessed from the ENEXA meta data graph.
+
+The method takes the following JSON data
+```json
+{
+        "pos": ["[list-of-positive-examples]","..."] ,
+        "neg": ["[list-of-negative-examples]","..."],
+        "model": "[name-of-the-learning-algorithm]",
+        "max_runtime": "[maximum-runtime-in-seconds]",
+        "iter_bound": "[maximum-iterations-during-training]",
+        "path_to_pretrained_drill": "pretrained_drill",
+        "path_embeddings": "[location-of-CSV-file-containing-the-embeddings]"
+}
+```
 
 ## TENTRIS module
 ### Goal
@@ -254,12 +267,13 @@ endpoint. Make sure that the specified file, indicated by the instance IRI in <[
 /add-resource
 ```
 endpoint. The initiation of execution involves linking the ENEXA module to a specific experiment identified by <[this should replace with the experimentIRI]>. The relevant RDF triples are detailed below: 
-```
+```ttl
 @prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
     @prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
     @prefix prov:   <http://www.w3.org/ns/prov#> .
     @prefix hobbit: <http://w3id.org/hobbit/vocab#> . 
     @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
     [] rdf:type enexa:ModuleInstance ;
     enexa:experiment <[this Should replace with the experimentIRI]> ;
     alg:instanceOf <http://w3id.org/dice-research/enexa/module/tentris/0.2.0-SNAPSHOT-1> ;
