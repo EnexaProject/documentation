@@ -48,6 +48,14 @@ entries:
       url : /module_dev.html
       output: web, pdf
 
+    - title: Deployed a NFS to be used by Kubernetes
+      url: /nfs_dep.html
+      output: web, pdf
+
+    - title: Kubernetes deployment
+      url: /kubernetes.html
+      output: web, pdf
+
   - title: Reference Manual
     output: web, pdf
     folderitems:
