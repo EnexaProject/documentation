@@ -142,13 +142,14 @@ The DICE Embeddings module requires the following parameters:
 - **Path to Knowledge Graph (KG):** <[]knowledge graph IRI>
 
 ### Execution
-```
+```ttl
 @prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
 @prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
 @prefix prov:   <http://www.w3.org/ns/prov#> .
 @prefix hobbit: <http://w3id.org/hobbit/vocab#> . 
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
 [] rdf:type enexa:ModuleInstance ;
 enexa:experiment <[experiment IRI]> ;
 alg:instanceOf <http://w3id.org/dice-research/enexa/module/dice-embeddings/1.0.0> ;
@@ -182,70 +183,54 @@ To get started with DICE Embeddings, send the provided module instance details t
 
 [also visit the project repository page](https://github.com/dice-group/dice-embeddings) 
 
-
-## Dice CEL module
-
-### Goal
-
-### Module Details
-To initiate the CEL Training module within the ENEXA service, submit the following request to the service endpoint '/start-container'. This module, based on Class Expression Learning (CEL), is a powerful tool for automatically learning class expressions in knowledge graphs.
-
-### Parameters
-
-### Execution 
-
-### Additional Information
-
 ## Class Expression Learning (CEL)
 
-
 CEL is a machine learning method specifically tailored for learning class expressions within knowledge graphs. In the realm of knowledge graphs, class expressions serve as descriptions of the properties of entities. For instance, a class expression could define all individuals residing in a specific city or all products manufactured by a particular company.
-
-### Goal
-### Module Details
-
-#### Usage Guidelines
 
 This module equips users with the capability to automatically learn complex class expressions from their knowledge graphs. By initiating the CEL Training module, users can harness machine learning techniques to derive meaningful insights and patterns from their data.
 
 ### Parameters
+All parameters use the namespace `http://w3id.org/dice-research/enexa/module/cel-deploy/parameter/`.
+
+- **endpoint**: A SPARQL endpoint hosting the knowledge graph on which the class expression learning is being executed.
 
 ### Execution 
 
-To get started with CEL Training, send the provided module instance details to the '/start-container' endpoint, ensuring to replace placeholders with the appropriate experiment and file IRIs. The module empowers users to enhance their understanding of knowledge graph entities and relationships through automated class expression learning.
+The module provides a web service that takes 
 
-### Serve after training
+#### Serve
 this module can serve a http endpoint and accept requests , for starting the service for this the bellow request should send  
-```
+```ttl
 @prefix alg: <http://www.w3id.org/dice-research/ontologies/algorithm/2023/06/> .
         @prefix enexa:  <http://w3id.org/dice-research/enexa/ontology#> .
         @prefix prov:   <http://www.w3.org/ns/prov#> .
         @prefix hobbit: <http://w3id.org/hobbit/vocab#> . 
         @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
         @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+
         [] rdf:type enexa:ModuleInstance ;
         enexa:experiment <[experimentIRI]> ;
         alg:instanceOf <http://w3id.org/dice-research/enexa/module/cel-deploy/1.0.0> ;
-        <http://w3id.org/dice-research/enexa/module/cel-deploy/parameter/kg> <[owl_file_iri same ]>;
-        <http://w3id.org/dice-research/enexa/module/cel-deploy/parameter/kge> <[embedding_csv_iri]>;
-        <http://w3id.org/dice-research/enexa/module/cel-deploy/parameter/heuristics> <[ cel_trained_file_kge_iri , it is the iri generated from last step]>.
+        <http://w3id.org/dice-research/enexa/module/cel-deploy/parameter/endpoint> <[SPARQL endpoint URL]>.
 ```
-after this request can send to the api  
+
+#### Web Service Endpoint
+After starting the module, the endpoint can be accessed using the following method:
 ```
 http://[container name]:7860/predict
 ```
-### Additional Information
-
+The container name can be accessed from the ENEXA meta data graph.
 
 ## TENTRIS module
 ### Goal
-### Module Details
 
+The goal of the TENTRIS module is to provide a fast and performant triple store.
+
+### Module Details
 
 The ENEXA module, instantiated with the Tentris RDF triple store, provides a comprehensive guide on leveraging Tentris—a robust, tensor-based RDF triple store. Tentris seamlessly integrates into the ENEXA service, offering efficient and high-performance capabilities for handling RDF data.
 
 Tentris is specifically designed to handle RDF data using a tensor-based approach. This module elucidates the key aspects of Tentris, emphasizing its functionalities, optimal performance, and support for SPARQL queries.
-
 
 #### Key Features
 
