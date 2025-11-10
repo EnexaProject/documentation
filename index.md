@@ -24,3 +24,7 @@ Project webpage: [enexa.eu](https://enexa.eu/).
 
 The documentation is primarily written for people who want to use the ENEXA platform and modules.
 
+### ENEXA Integration Demo
+
+Click [here to watch a demo video](https://files.dice-research.org/projects/ENEXA/finaldemoFiles/demoWithsound_aaC.mp4) of ENEXA modules working together. 
+<img width="600" alt="enexa-integration" src="https://github.com/user-attachments/assets/64e46d34-b491-4d9a-9b3f-46d7982d5987" />
